@@ -1,0 +1,75 @@
+sc_warband_category = {
+
+	# Move the camp to a neighbouring empty state. Shows up on the map as a clickable state.
+	sc_warband_march = {
+		icon = generic_army_support
+		state_target = yes
+		on_map_mode = map_and_decisions_view
+
+		target_root_trigger = { has_country_flag = sc_nomadic }
+		target_trigger = { FROM = { sc_valid_march_target = yes } }
+
+		available = {
+			check_variable = { warband_supplies > 9 }
+			NOT = { has_country_flag = sc_on_the_march }
+			has_war = no
+		}
+
+		days_remove = 14
+		days_re_enable = 0
+
+		complete_effect = {
+			set_country_flag = sc_on_the_march
+			sc_warband_begin_march = yes
+		}
+		remove_effect = {
+			clr_country_flag = sc_on_the_march
+			sc_warband_arrive = yes
+		}
+
+		ai_will_do = {
+			base = 1
+			modifier = { factor = 20 capital_scope = { check_variable = { sc_forage < 15 } } }
+			modifier = { factor = 0 capital_scope = { check_variable = { sc_forage > 30 } } }
+		}
+	}
+
+	# Strip a neighbouring state of food and loot. Fast supplies, hurts stability.
+	sc_warband_raid = {
+		icon = generic_prepare_civil_war
+		state_target = yes
+		on_map_mode = map_and_decisions_view
+
+		target_root_trigger = { has_country_flag = sc_nomadic }
+		target_trigger = { FROM = { sc_valid_raid_target = yes } }
+
+		cost = 15
+		days_remove = 7
+
+		complete_effect = { sc_warband_raid = yes }
+
+		ai_will_do = {
+			base = 0
+			modifier = { add = 5 check_variable = { warband_supplies < 30 } }
+		}
+	}
+
+	# End the wandering: become a real (settled) state.
+	sc_warband_settle_down = {
+		icon = generic_construction
+
+		available = {
+			check_variable = { warband_supplies > 49 }
+			capital_scope = { check_variable = { sc_forage > 39 } }
+			has_war = no
+			NOT = { has_country_flag = sc_on_the_march }
+		}
+
+		fire_only_once = yes
+		cost = 50
+
+		complete_effect = { sc_warband_settle = yes }
+
+		ai_will_do = { base = 1 }
+	}
+}

@@ -1,0 +1,21 @@
+sc_warband_starving = {
+	icon = GFX_idea_generic_disjointed_gov
+	enable = { always = yes }
+	remove_trigger = { check_variable = { warband_supplies > 19 } }
+
+	army_org_factor = -0.25
+	army_attack_factor = -0.2
+	army_defence_factor = -0.1
+	stability_factor = -0.15
+	monthly_population = -0.2
+}
+
+sc_warband_well_fed = {
+	icon = GFX_idea_generic_army_support
+	enable = { always = yes }
+	remove_trigger = { check_variable = { warband_supplies < 70 } }
+
+	army_org_factor = 0.1
+	army_speed_factor = 0.1
+	army_morale_factor = 0.1
+}

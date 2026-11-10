@@ -1,0 +1,25 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			# Only build the shattered world for the 1946 bookmark, and only once.
+			if = {
+				limit = {
+					date > 1946.1.1
+					NOT = { has_global_flag = sc_world_setup_done }
+				}
+				set_global_flag = sc_world_setup_done
+				sc_setup_shattered_europe = yes
+			}
+		}
+	}
+
+	# Fires for every country once a month.
+	on_monthly = {
+		effect = {
+			if = {
+				limit = { has_country_flag = sc_nomadic }
+				sc_warband_monthly_tick = yes
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+# The Free Hanse: the old port cities governing themselves under a council of merchants and dockworkers.
+capital = 1   # TODO: real capital is set by setup/state_assignments.csv
+set_research_slots = 3
+set_stability = 0.6
+set_war_support = 0.35
+set_politics = { ruling_party = democratic last_election = "1945.10.1" election_frequency = 24 elections_allowed = yes }
+set_popularities = { democratic = 55 fascism = 5 communism = 25 neutrality = 15 }
+recruit_character = HNS_albers
+set_technology = { infantry_weapons = 1 infantry_weapons1 = 1 tech_support = 1 tech_recon = 1 }
+division_template = {
+	name = "Buergerwehr"
+	regiments = { infantry = { x = 0 y = 0 } infantry = { x = 0 y = 1 } infantry = { x = 1 y = 0 } }
+}
+add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 2000 producer = HNS }

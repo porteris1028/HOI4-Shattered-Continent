@@ -1,0 +1,17 @@
+ideas = {
+	country = {
+		# Keeps the placeholder WST tag from building armies or factories.
+		sc_no_mans_land = {
+			picture = generic_disjointed_gov
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				industrial_capacity_factory = -1
+				industrial_capacity_dockyard = -1
+				production_speed_buildings_factor = -1
+				conscription_factor = -1
+				research_speed_factor = -1
+			}
+		}
+	}
+}

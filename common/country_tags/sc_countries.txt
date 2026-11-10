@@ -1,0 +1,10 @@
+# Shattered Continent - new country tags
+# Tags must be exactly 3 characters and must not clash with vanilla tags.
+
+WST = "countries/SC No Mans Land.txt"      # placeholder owner for empty wasteland states
+ALP = "countries/SC Alpenfestung.txt"      # SS holdout - Alpine Redoubt
+FNO = "countries/SC Festung Nord.txt"      # SS / Wehrmacht holdout - Norway
+HNS = "countries/SC Free Hanse.txt"        # free state - Hamburg / Bremen / Luebeck
+LYO = "countries/SC Lyon Commune.txt"      # free state - Lyon and the Rhone
+HST = "countries/SC Volkov Host.txt"       # roaming warlord - Cossack host
+LGN = "countries/SC Lost Legion.txt"       # roaming warlord - deserter army

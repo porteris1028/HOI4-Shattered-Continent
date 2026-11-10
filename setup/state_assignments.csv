@@ -1,0 +1,17 @@
+tag,state_id,capital,cores,note
+# Fill in state_id using: python3 tools/list_states.py "<HoI4 folder>" --search <name>,,,,
+# Then run: python3 tools/build_setup.py,,,,
+ALP,,yes,yes,Tyrol (Innsbruck) - redoubt heartland
+ALP,,no,yes,Salzburg / Berchtesgaden
+ALP,,no,no,Vorarlberg
+FNO,,yes,yes,Oslo region
+FNO,,no,yes,Bergen / Western Norway
+FNO,,no,no,Trondheim
+FNO,,no,no,Northern Norway (Narvik)
+HNS,,yes,yes,Hamburg
+HNS,,no,yes,Bremen
+HNS,,no,no,Schleswig-Holstein (Luebeck)
+LYO,,yes,yes,Rhone (Lyon)
+LYO,,no,no,Isere / Savoy
+HST,,yes,no,Starting camp somewhere in eastern Poland / western Ukraine
+LGN,,yes,no,Starting camp in the Ardennes / Champagne

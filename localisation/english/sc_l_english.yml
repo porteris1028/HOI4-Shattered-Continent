@@ -1,0 +1,100 @@
+﻿l_english:
+ # --- Bookmark ---
+ SC_BOOKMARK_NAME:0 "The Shattered Continent"
+ SC_BOOKMARK_DESC:0 "Spring, 1946. The war never really ended. Berlin, Paris, Rome, London and Moscow are gone, and so are the governments that ruled from them. Across the ruins, warlords ride from valley to valley, free cities hide behind their walls, and in the mountains the last SS fortresses wait for an order that will never come."
+ SC_OTHER_GAMEPLAY_DESC:0 "Pick any nation that has survived the collapse."
+
+ # --- No Man's Land ---
+ WST:0 "No Man's Land"
+ WST_DEF:0 "No Man's Land"
+ WST_ADJ:0 "Wasteland"
+ WST_neutrality:0 "No Man's Land"
+ WST_neutrality_DEF:0 "No Man's Land"
+ WST_neutrality_ADJ:0 "Wasteland"
+
+ # --- Alpenfestung ---
+ ALP:0 "Alpenfestung"
+ ALP_DEF:0 "the Alpenfestung"
+ ALP_ADJ:0 "Redoubt"
+ ALP_fascism:0 "Alpenfestung"
+ ALP_fascism_DEF:0 "the Alpenfestung"
+ ALP_fascism_ADJ:0 "Redoubt"
+ ALP_GAMEPLAY_DESC:0 "In 1945, SS divisions retreated into the Alps to make a last stand. The last stand never came. Now a fanatical garrison holds the mountain passes, fed by stolen grain and by the belief that the Reich still lives."
+ ALP_kessler:0 "Ernst Kessler"
+
+ # --- Festung Nord ---
+ FNO:0 "Festung Nord"
+ FNO_DEF:0 "Festung Nord"
+ FNO_ADJ:0 "Nordic Garrison"
+ FNO_fascism:0 "Festung Nord"
+ FNO_fascism_DEF:0 "Festung Nord"
+ FNO_fascism_ADJ:0 "Nordic Garrison"
+ FNO_GAMEPLAY_DESC:0 "Nearly half a million German soldiers were stranded in Norway when the Reich collapsed. Their SS commissars refused to surrender. The Norwegian resistance still fights in the fjords."
+ FNO_brandt:0 "Heinrich Brandt"
+
+ # --- Free Hanse ---
+ HNS:0 "Free Hanse"
+ HNS_DEF:0 "the Free Hanse"
+ HNS_ADJ:0 "Hanseatic"
+ HNS_democratic:0 "Hanseatic Free State"
+ HNS_democratic_DEF:0 "the Hanseatic Free State"
+ HNS_democratic_ADJ:0 "Hanseatic"
+ HNS_GAMEPLAY_DESC:0 "When the occupation armies fell apart, the dockworkers and merchants of the old Hanseatic ports took over. The Free Hanse trades with anyone who has fuel or grain, and arms every citizen who can hold a rifle."
+ HNS_albers:0 "Margarete Albers"
+
+ # --- Lyon Commune ---
+ LYO:0 "Lyon Commune"
+ LYO_DEF:0 "the Lyon Commune"
+ LYO_ADJ:0 "Lyonnais"
+ LYO_communism:0 "Commune of Lyon"
+ LYO_communism_DEF:0 "the Commune of Lyon"
+ LYO_communism_ADJ:0 "Communard"
+ LYO_GAMEPLAY_DESC:0 "The Resistance took Lyon in the chaos of 1945 and never gave it up. The Commune promises bread and justice, and the Rhone valley is the last fertile land in a starving France."
+ LYO_marchand:0 "Lucien Marchand"
+
+ # --- Volkov's Host ---
+ HST:0 "Volkov's Host"
+ HST_DEF:0 "Volkov's Host"
+ HST_ADJ:0 "Cossack"
+ HST_neutrality:0 "Volkov's Host"
+ HST_neutrality_DEF:0 "Volkov's Host"
+ HST_neutrality_ADJ:0 "Cossack"
+ HST_GAMEPLAY_DESC:0 "Ataman Volkov's riders have no home and want none. They take what the land gives, and when it gives nothing more, they ride on.\n\n§YRoaming warlord:§! you must keep moving your camp to feed your army."
+ HST_volkov:0 "Grigory Volkov"
+
+ # --- Lost Legion ---
+ LGN:0 "The Lost Legion"
+ LGN_DEF:0 "the Lost Legion"
+ LGN_ADJ:0 "Legionary"
+ LGN_neutrality:0 "The Lost Legion"
+ LGN_neutrality_DEF:0 "the Lost Legion"
+ LGN_neutrality_ADJ:0 "Legionary"
+ LGN_GAMEPLAY_DESC:0 "Frenchmen, Poles, Germans, Italians and Americans: deserters from every army that marched through Europe. They follow Captain Da Costa because he keeps them fed.\n\n§YRoaming warlord:§! you must keep moving your camp to feed your army."
+ LGN_dacosta:0 "Rafael Da Costa"
+
+ # --- Ideas ---
+ sc_no_mans_land:0 "No Man's Land"
+ sc_no_mans_land_desc:0 "Empty ruins, burned farms and the scattered survivors of a dead continent."
+
+ # --- Warband mechanic ---
+ sc_warband_category:0 "The Warband"
+ sc_warband_category_desc:0 "Your army lives off the land. Supplies: §Y[?warband_supplies]§!/100. Forage left at camp: §Y[?sc_camp_forage]§!.\n\nEvery month the warband eats from the camp's forage. When the forage runs out, supplies fall and the men begin to starve and desert. March on before that happens."
+ sc_warband_march:0 "March the Warband to [FROM.GetName]"
+ sc_warband_march_desc:0 "Break camp and move the whole warband to [FROM.GetName]. Territory we leave behind goes back to the wasteland. Costs §Y10§! supplies."
+ sc_warband_raid:0 "Raid [FROM.GetName]"
+ sc_warband_raid_desc:0 "Send riders to strip [FROM.GetName] of food and anything else worth carrying. Gives §G+20§! supplies, but the land will not feed anyone for a long time afterwards."
+ sc_warband_settle_down:0 "Put Down Roots"
+ sc_warband_settle_down_desc:0 "The men are tired of the road. This land is rich enough to farm. Lay down the banners and build something that lasts.\n\n§RThis ends the roaming warlord gameplay.§!"
+
+ sc_warband_starving:0 "Starving Warband"
+ sc_warband_well_fed:0 "Well-Fed Warband"
+
+ sc_warband.1.t:0 "The Men Are Deserting"
+ sc_warband.1.d:0 "The wagons are empty. Last night whole squads slipped away into the dark to find food on their own. If we do not find new land soon, there will be no warband left to lead."
+ sc_warband.1.a:0 "Find them. Then find food."
+ sc_warband.2.t:0 "A New Camp"
+ sc_warband.2.d:0 "The columns reach [Root.Capital.GetName] and the tents go up. Scouts ride out to count the fields and granaries still standing."
+ sc_warband.2.a:0 "We eat tonight."
+ sc_warband.3.t:0 "Too Late"
+ sc_warband.3.d:0 "Our outriders came back with bad news. Someone else has already claimed the land we were marching to. The march was wasted."
+ sc_warband.3.a:0 "Curse them."

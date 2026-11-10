@@ -1,0 +1,14 @@
+# State scope, ROOT = the warlord country.
+# Empty wasteland next to the warband's territory.
+sc_valid_march_target = {
+	is_owned_by = WST
+	NOT = { has_state_flag = sc_march_target }
+	any_neighbor_state = { is_owned_by = ROOT }
+}
+
+# State scope, ROOT = the warlord country.
+sc_valid_raid_target = {
+	NOT = { is_owned_by = ROOT }
+	any_neighbor_state = { is_owned_by = ROOT }
+	NOT = { has_state_flag = { flag = sc_raided days < 180 } }
+}

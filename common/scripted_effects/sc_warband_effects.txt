@@ -1,0 +1,127 @@
+# ============================================================
+#  WARBAND MECHANIC - roaming warlords
+#
+#  A nomadic warlord (country flag sc_nomadic) holds a "camp" state, which is its capital.
+#  - Every month the warband eats from the camp's FORAGE (a state variable).
+#  - Forage turns into SUPPLIES (a country variable, 0-100). Upkeep eats supplies.
+#  - When the camp runs dry, supplies fall, and starvation penalties and desertion follow.
+#  - So the warband has to MARCH to a neighbouring state, abandoning the old camp.
+#  - With enough supplies on rich land, the warlord can SETTLE and become a real state.
+# ============================================================
+
+@sc_forage_start = 60
+@sc_forage_eat = 15
+@sc_supply_upkeep = 8
+
+# State scope. Gives a state its forage the first time a warband camps there, or once
+# it has had a year to recover from the last raid.
+sc_init_forage = {
+	if = {
+		limit = {
+			NOT = { has_state_flag = { flag = sc_raided days < 365 } }
+		}
+		set_variable = { sc_forage = @sc_forage_start }
+		# Bigger, richer states feed an army for longer.
+		if = { limit = { state_population_k > 1000 } add_to_variable = { sc_forage = 20 } }
+		if = { limit = { state_population_k > 3000 } add_to_variable = { sc_forage = 20 } }
+	}
+}
+
+# Country scope. Runs monthly from on_actions.
+sc_warband_monthly_tick = {
+	capital_scope = {
+		if = {
+			limit = { check_variable = { sc_forage > 0 } }
+			subtract_from_variable = { sc_forage = @sc_forage_eat }
+			ROOT = { add_to_variable = { warband_supplies = @sc_forage_eat } }
+		}
+		clamp_variable = { var = sc_forage min = 0 max = 100 }
+		ROOT = { set_variable = { sc_camp_forage = PREV.sc_forage } }
+	}
+
+	subtract_from_variable = { warband_supplies = @sc_supply_upkeep }
+	clamp_variable = { var = warband_supplies min = 0 max = 100 }
+
+	if = {
+		limit = {
+			check_variable = { warband_supplies < 20 }
+			NOT = { has_dynamic_modifier = { modifier = sc_warband_starving } }
+		}
+		add_dynamic_modifier = { modifier = sc_warband_starving }
+	}
+	if = {
+		limit = {
+			check_variable = { warband_supplies > 69 }
+			NOT = { has_dynamic_modifier = { modifier = sc_warband_well_fed } }
+		}
+		add_dynamic_modifier = { modifier = sc_warband_well_fed }
+	}
+	if = {
+		limit = { check_variable = { warband_supplies < 1 } }
+		country_event = { id = sc_warband.1 }
+	}
+}
+
+# Country scope (ROOT = warlord). Called when the march decision is taken.
+# FROM = destination state.
+sc_warband_begin_march = {
+	set_variable = { sc_march_dest = FROM }
+	subtract_from_variable = { warband_supplies = 10 }
+	FROM = { set_state_flag = sc_march_target }
+}
+
+# Country scope. Called when the march timer ends (decision remove_effect).
+sc_warband_arrive = {
+	if = {
+		limit = { var:sc_march_dest = { is_owned_by = WST } }
+
+		transfer_state = var:sc_march_dest
+		set_capital = { state = var:sc_march_dest }
+
+		# Abandon everything that isn't the new camp, a core, or a fortified holding.
+		every_owned_state = {
+			limit = {
+				NOT = { has_state_flag = sc_march_target }
+				NOT = { is_core_of = ROOT }
+				NOT = { has_state_flag = sc_holdfast }
+			}
+			set_state_flag = sc_raided
+			WST = { transfer_state = PREV }
+		}
+
+		var:sc_march_dest = {
+			sc_init_forage = yes
+			clr_state_flag = sc_march_target
+			ROOT = { set_variable = { sc_camp_forage = PREV.sc_forage } }
+		}
+		country_event = { id = sc_warband.2 }
+	}
+	else = {
+		# Someone else got there first.
+		var:sc_march_dest = { clr_state_flag = sc_march_target }
+		add_to_variable = { warband_supplies = 5 }
+		country_event = { id = sc_warband.3 }
+	}
+}
+
+# Country scope. FROM = neighbouring state to raid.
+sc_warband_raid = {
+	add_to_variable = { warband_supplies = 20 }
+	clamp_variable = { var = warband_supplies min = 0 max = 100 }
+	FROM = {
+		set_state_flag = sc_raided
+		set_variable = { sc_forage = 0 }
+	}
+	add_stability = -0.02
+}
+
+# Country scope. The warband puts down roots.
+sc_warband_settle = {
+	clr_country_flag = sc_nomadic
+	set_country_flag = sc_settled_warlord
+	capital_scope = { add_core_of = ROOT }
+	remove_dynamic_modifier = { modifier = sc_warband_starving }
+	remove_dynamic_modifier = { modifier = sc_warband_well_fed }
+	add_stability = 0.15
+	add_war_support = -0.1
+}

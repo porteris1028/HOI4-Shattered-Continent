@@ -1,0 +1,27 @@
+# All leaders are fictional so the group can workshop them freely.
+characters = {
+	ALP_kessler = {
+		name = ALP_kessler
+		country_leader = { ideology = nazism expire = "1975.1.1.1" id = -1 }
+	}
+	FNO_brandt = {
+		name = FNO_brandt
+		country_leader = { ideology = nazism expire = "1975.1.1.1" id = -1 }
+	}
+	HNS_albers = {
+		name = HNS_albers
+		country_leader = { ideology = liberalism expire = "1975.1.1.1" id = -1 }
+	}
+	LYO_marchand = {
+		name = LYO_marchand
+		country_leader = { ideology = marxism expire = "1975.1.1.1" id = -1 }
+	}
+	HST_volkov = {
+		name = HST_volkov
+		country_leader = { ideology = despotism expire = "1975.1.1.1" id = -1 }
+	}
+	LGN_dacosta = {
+		name = LGN_dacosta
+		country_leader = { ideology = despotism expire = "1975.1.1.1" id = -1 }
+	}
+}

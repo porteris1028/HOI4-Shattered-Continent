@@ -1,0 +1,36 @@
+add_namespace = sc_warband
+
+# Supplies hit zero: desertion.
+country_event = {
+	id = sc_warband.1
+	title = sc_warband.1.t
+	desc = sc_warband.1.d
+	is_triggered_only = yes
+
+	option = {
+		name = sc_warband.1.a
+		add_manpower = -1000
+		add_stability = -0.05
+		add_war_support = -0.05
+	}
+}
+
+# Arrived at the new camp.
+country_event = {
+	id = sc_warband.2
+	title = sc_warband.2.t
+	desc = sc_warband.2.d
+	is_triggered_only = yes
+
+	option = { name = sc_warband.2.a }
+}
+
+# Destination was taken before we arrived.
+country_event = {
+	id = sc_warband.3
+	title = sc_warband.3.t
+	desc = sc_warband.3.d
+	is_triggered_only = yes
+
+	option = { name = sc_warband.3.a }
+}

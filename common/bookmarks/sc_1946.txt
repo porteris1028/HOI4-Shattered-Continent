@@ -1,0 +1,21 @@
+bookmarks = {
+	bookmark = {
+		name = "SC_BOOKMARK_NAME"
+		desc = "SC_BOOKMARK_DESC"
+		date = 1946.3.1.12
+		picture = "GFX_select_date_1939"
+		default_country = "HST"
+		default = yes
+
+		HST = { history = "HST_GAMEPLAY_DESC" ideology = neutrality }
+		LGN = { history = "LGN_GAMEPLAY_DESC" ideology = neutrality }
+		ALP = { history = "ALP_GAMEPLAY_DESC" ideology = fascism }
+		HNS = { history = "HNS_GAMEPLAY_DESC" ideology = democratic }
+		LYO = { history = "LYO_GAMEPLAY_DESC" ideology = communism }
+
+		"---" = { history = "SC_OTHER_GAMEPLAY_DESC" }
+		FNO = { minor = yes history = "FNO_GAMEPLAY_DESC" ideology = fascism }
+
+		effect = { randomize_weather = 22345 }
+	}
+}

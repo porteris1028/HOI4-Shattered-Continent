@@ -1,0 +1,5 @@
+sc_warband_category = {
+	icon = generic_military
+	visible = { has_country_flag = sc_nomadic }
+	priority = 100
+}
