@@ -1,0 +1,11 @@
+# State scope, ROOT = acting country. Wasteland on our border.
+sc_adjacent_wasteland = {
+	is_owned_by = WST
+	any_neighbor_state = { is_owned_by = ROOT }
+}
+
+# Country scope. Do we border any wasteland at all? (Shows The Wastes decisions.)
+sc_borders_wasteland = {
+	NOT = { tag = WST }
+	any_owned_state = { any_neighbor_state = { is_owned_by = WST } }
+}

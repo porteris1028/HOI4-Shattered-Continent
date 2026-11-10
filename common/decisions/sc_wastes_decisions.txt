@@ -1,0 +1,50 @@
+sc_wastes_category = {
+
+	# Send soldiers to clear raiders, mines and wild packs from a wasteland state.
+	sc_wastes_sweep = {
+		icon = generic_army_support
+		state_target = yes
+		on_map_mode = map_and_decisions_view
+
+		target_root_trigger = { sc_borders_wasteland = yes }
+		target_trigger = {
+			FROM = {
+				sc_adjacent_wasteland = yes
+				check_variable = { sc_danger > 0 }
+				NOT = { has_state_flag = sc_irradiated }
+			}
+		}
+		available = { has_manpower > 999 }
+
+		cost = 20
+		days_re_enable = 60
+		complete_effect = { sc_wastes_sweep = yes }
+
+		ai_will_do = { base = 2 }
+	}
+
+	# Settle safe wasteland. Roaming warbands use their march decision instead.
+	sc_wastes_claim = {
+		icon = generic_construction
+		state_target = yes
+		on_map_mode = map_and_decisions_view
+
+		target_root_trigger = {
+			sc_borders_wasteland = yes
+			NOT = { has_country_flag = sc_nomadic }
+		}
+		target_trigger = {
+			FROM = {
+				sc_adjacent_wasteland = yes
+				check_variable = { sc_danger < 25 }
+				NOT = { has_state_flag = sc_irradiated }
+			}
+		}
+
+		cost = 50
+		days_remove = 45
+		remove_effect = { sc_wastes_claim = yes }
+
+		ai_will_do = { base = 5 }
+	}
+}

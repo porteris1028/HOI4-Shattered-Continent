@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Turn setup/state_assignments.csv into common/scripted_effects/sc_generated_setup_effects.txt.
+"""Turn the setup CSVs into common/scripted_effects/sc_generated_setup_effects.txt.
+
+setup/state_assignments.csv  -> who owns what in 1946 (sc_assign_starting_states)
+setup/danger_zones.csv       -> blast sites / fallout / raider country (sc_apply_danger_zones)
+
 
 The CSV is the workshop document for the starting map: who owns what in 1946.
 Columns: tag, state_id, capital (yes/no), cores (yes/no), note
@@ -13,6 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "setup" / "state_assignments.csv"
+DANGER = ROOT / "setup" / "danger_zones.csv"
 OUT = ROOT / "common" / "scripted_effects" / "sc_generated_setup_effects.txt"
 
 def yes(v): return str(v).strip().lower() in ("yes", "y", "true", "1")
@@ -38,8 +43,11 @@ def main():
 
     for tag, states in by_tag.items():
         caps = [s for s, c, *_ in states if c]
-        if len(caps) != 1:
-            problems.append(f"{tag} needs exactly one capital row (has {len(caps)})")
+        if len(caps) > 1:
+            problems.append(f"{tag} has {len(caps)} capital rows - only one allowed")
+        elif not caps:
+            print(f"Note: {tag} has no capital row - fine for an existing country like JAP, "
+                  f"but a new nation needs one.")
 
     if problems:
         print("Problems found - nothing written:\n  " + "\n  ".join(problems)); sys.exit(1)
@@ -52,12 +60,40 @@ def main():
             out.append(f"\t\ttransfer_state = {sid}" + (f"\t# {note}" if note else ""))
             if core:
                 out.append(f"\t\tadd_state_core = {sid}")
-        cap = next(s for s, c, *_ in states if c)
-        out.append(f"\t\tset_capital = {{ state = {cap} }}")
+        cap = next((s for s, c, *_ in states if c), None)
+        if cap:
+            out.append(f"\t\tset_capital = {{ state = {cap} }}")
         out.append("\t}")
     out.append("}")
+    out += danger_zones()
     OUT.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"Wrote {OUT.relative_to(ROOT)}: {len(seen)} states for {len(by_tag)} countries ({skipped} rows still undecided).")
+
+
+def danger_zones():
+    out, problems, done, skipped = ["", "sc_apply_danger_zones = {"], [], 0, 0
+    if DANGER.exists():
+        with DANGER.open(newline="", encoding="utf-8-sig") as f:
+            for n, row in enumerate(csv.DictReader(f), start=2):
+                sid = row["state_id"].strip()
+                if sid.startswith("#"):
+                    continue
+                if not sid:
+                    skipped += 1
+                    continue
+                danger = row.get("danger", "").strip() or "50"
+                if not (sid.isdigit() and danger.isdigit() and 0 <= int(danger) <= 100):
+                    problems.append(f"danger_zones.csv line {n}: bad state_id or danger"); continue
+                note = row.get("note", "").strip()
+                body = f"set_variable = {{ sc_danger = {danger} }}"
+                if yes(row.get("irradiated")):
+                    body += " set_state_flag = sc_irradiated"
+                out.append(f"\t{sid} = {{ {body} }}" + (f"\t# {note}" if note else ""))
+                done += 1
+    if problems:
+        print("\n".join(problems)); sys.exit(1)
+    print(f"Danger zones: {done} states set ({skipped} rows still undecided).")
+    return out + ["}"]
 
 if __name__ == "__main__":
     main()

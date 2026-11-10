@@ -1,0 +1,103 @@
+# ============================================================
+#  NO MAN'S LAND DANGER
+#
+#  Every wasteland state has a DANGER value (state variable sc_danger, 0-100):
+#  raiders, deserters, wild dogs, minefields, collapsed cities.
+#    - Danger slowly rises every month in unclaimed land (cap 80).
+#    - IRRADIATED states (flag sc_irradiated) sit at 70-100, have no forage and cause
+#      Radiation Sickness to any army that camps there.
+#    - Countries bordering dangerous land suffer raids.
+#    - Warbands marching into dangerous land risk ambushes, or find caches.
+#    - Any country can SWEEP adjacent wasteland to lower danger, then CLAIM it once
+#      it is safe (danger below 25).
+# ============================================================
+
+@sc_danger_cap = 80
+
+# Global. Random starting danger for all wasteland.
+sc_init_danger = {
+	every_state = {
+		limit = { is_owned_by = WST }
+		set_variable_to_random = { var = sc_danger min = 10 max = 60 integer = yes }
+	}
+}
+
+# Country scope (WST). Runs monthly.
+sc_wst_monthly_tick = {
+	every_owned_state = {
+		if = {
+			limit = { has_state_flag = sc_irradiated }
+			clamp_variable = { var = sc_danger min = 70 max = 100 }
+		}
+		else_if = {
+			limit = { check_variable = { sc_danger < @sc_danger_cap } }
+			add_to_variable = { sc_danger = 1 }
+		}
+	}
+}
+
+# Country scope. Runs monthly for every real country.
+sc_border_raid_check = {
+	if = {
+		limit = {
+			NOT = { has_country_flag = sc_recent_wasteland_raid }
+			any_owned_state = {
+				any_neighbor_state = {
+					is_owned_by = WST
+					check_variable = { sc_danger > 60 }
+				}
+			}
+		}
+		random = {
+			chance = 12
+			set_country_flag = { flag = sc_recent_wasteland_raid days = 120 }
+			country_event = { id = sc_danger.1 }
+		}
+	}
+}
+
+# Country scope (warband). var:sc_march_dest = the state just entered.
+sc_wasteland_arrival_check = {
+	if = {
+		limit = { var:sc_march_dest = { has_state_flag = sc_irradiated } }
+		if = {
+			limit = { has_idea = sc_ash_children_of_the_fire }
+			add_dynamic_modifier = { modifier = sc_radiation_sickness_mild days = 180 }
+		}
+		else = {
+			add_dynamic_modifier = { modifier = sc_radiation_sickness days = 180 }
+		}
+	}
+	if = {
+		limit = { var:sc_march_dest = { check_variable = { sc_danger > 66 } } }
+		random = { chance = 50 country_event = { id = sc_danger.2 } }
+	}
+	else_if = {
+		limit = { var:sc_march_dest = { check_variable = { sc_danger > 33 } } }
+		random = { chance = 25 country_event = { id = sc_danger.2 } }
+	}
+	else = {
+		random = { chance = 10 country_event = { id = sc_danger.2 } }
+	}
+	random = { chance = 15 country_event = { id = sc_danger.3 } }
+}
+
+# Country scope, FROM = wasteland state being swept.
+sc_wastes_sweep = {
+	add_manpower = -500
+	FROM = {
+		subtract_from_variable = { sc_danger = 30 }
+		clamp_variable = { var = sc_danger min = 0 max = 100 }
+	}
+	army_experience = 3
+	random = { chance = 25 country_event = { id = sc_danger.3 } }
+}
+
+# Country scope, FROM = wasteland state being claimed.
+sc_wastes_claim = {
+	if = {
+		limit = { FROM = { is_owned_by = WST } }
+		transfer_state = FROM
+		FROM = { set_variable = { sc_danger = 0 } }
+	}
+}

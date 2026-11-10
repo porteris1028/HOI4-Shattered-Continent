@@ -1,0 +1,60 @@
+# ============================================================
+#  FACTION MECHANICS
+# ============================================================
+
+# ---------------- Black Order (Himmler cult): DEVOTION ----------------
+# Devotion (0-100) decays every month. High devotion = stability and war support,
+# low devotion = penalties and heresy. Keep it up with rites and visions.
+sc_blo_setup = {
+	set_variable = { sc_devotion = 60 }
+	sc_blo_update_devotion = yes
+	add_dynamic_modifier = { modifier = sc_blo_devotion }
+}
+
+sc_blo_update_devotion = {
+	clamp_variable = { var = sc_devotion min = 0 max = 100 }
+	# stability: -15% at 0 devotion, +15% at 100
+	set_variable = { sc_devotion_stability = sc_devotion }
+	multiply_variable = { sc_devotion_stability = 0.003 }
+	subtract_from_variable = { sc_devotion_stability = 0.15 }
+	# war support: 0% to +20%
+	set_variable = { sc_devotion_war_support = sc_devotion }
+	multiply_variable = { sc_devotion_war_support = 0.002 }
+}
+
+sc_blo_monthly_tick = {
+	subtract_from_variable = { sc_devotion = 3 }
+	sc_blo_update_devotion = yes
+	if = {
+		limit = { check_variable = { sc_devotion < 20 } }
+		random = { chance = 25 country_event = { id = sc_cult.2 } }
+	}
+}
+
+# ---------------- Banat: the crusade must go on ----------------
+# Without a war, the fanatics turn on each other.
+sc_bnt_monthly_tick = {
+	if = {
+		limit = { has_war = no }
+		add_stability = -0.01
+	}
+}
+
+# ---------------- United Kingdom: uprisings ----------------
+sc_eng_setup_uprisings = {
+	add_ideas = { sc_eng_red_clydeside sc_eng_irish_troubles }
+	activate_mission = sc_eng_clydeside_mission
+	activate_mission = sc_eng_ireland_mission
+}
+
+# Ireland breaks away: everything Ireland considers its own goes to it.
+sc_eng_lose_ulster = {
+	if = {
+		limit = { country_exists = IRE }
+		every_owned_state = {
+			limit = { OR = { is_core_of = IRE is_claimed_by = IRE } }
+			IRE = { transfer_state = PREV }
+		}
+		IRE = { add_war_support = 0.1 add_stability = 0.1 }
+	}
+}

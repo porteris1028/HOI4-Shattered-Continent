@@ -3,3 +3,19 @@ sc_warband_category = {
 	visible = { has_country_flag = sc_nomadic }
 	priority = 100
 }
+
+sc_wastes_category = {
+	icon = generic_military
+	visible = { sc_borders_wasteland = yes }
+	priority = 90
+}
+
+sc_alp_category = { icon = generic_military visible = { tag = ALP } priority = 100 }
+sc_fno_category = { icon = generic_military visible = { tag = FNO } priority = 100 }
+sc_bnt_category = { icon = generic_military visible = { tag = BNT } priority = 100 }
+sc_blo_category = { icon = generic_political_actions visible = { tag = BLO } priority = 100 }
+sc_eng_unrest_category = {
+	icon = generic_political_actions
+	visible = { tag = ENG OR = { has_idea = sc_eng_red_clydeside has_idea = sc_eng_irish_troubles } }
+	priority = 100
+}

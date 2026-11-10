@@ -1,0 +1,17 @@
+state_id,danger,irradiated,note
+# Every other wasteland state gets a random danger of 10-60 at game start.,,,
+# irradiated = yes: no forage, danger 70-100, Radiation Sickness for anyone who camps there.,,,
+# ---------------- Blast site: Berlin ----------------,,,
+,100,yes,Berlin / Brandenburg - ground zero
+,85,yes,Neighbouring state downwind (east of Berlin)
+,75,yes,Neighbouring state (north - Mecklenburg?)
+,70,no,Outer fallout ring - Saxony-Anhalt
+# ---------------- Blast site: Munich ----------------,,,
+,100,yes,Upper Bavaria (Munich) - ground zero
+,80,yes,Swabia (Augsburg)
+,70,no,Lower Bavaria
+# ---------------- The chain reaction (workshop: what exactly was it?) ----------------,,,
+,75,no,Paris ruins
+,75,no,Rhineland (Cologne)
+,70,no,Silesia - burned industrial zone
+,70,no,Moscow ruins

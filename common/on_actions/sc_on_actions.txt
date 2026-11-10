@@ -16,10 +16,12 @@ on_actions = {
 	# Fires for every country once a month.
 	on_monthly = {
 		effect = {
-			if = {
-				limit = { has_country_flag = sc_nomadic }
-				sc_warband_monthly_tick = yes
-			}
+			if = { limit = { tag = WST } sc_wst_monthly_tick = yes }
+			else = { sc_border_raid_check = yes }
+
+			if = { limit = { has_country_flag = sc_nomadic } sc_warband_monthly_tick = yes }
+			if = { limit = { has_country_flag = sc_cult_state } sc_blo_monthly_tick = yes }
+			if = { limit = { tag = BNT } sc_bnt_monthly_tick = yes }
 		}
 	}
 }

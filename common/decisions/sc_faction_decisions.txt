@@ -1,0 +1,221 @@
+# ======================== ALPENFESTUNG ========================
+sc_alp_category = {
+	sc_alp_fortify_passes_1 = {
+		icon = generic_construction
+		visible = { has_idea = sc_alp_mountain_redoubt_1 }
+		cost = 75
+		fire_only_once = yes
+		complete_effect = { swap_ideas = { remove_idea = sc_alp_mountain_redoubt_1 add_idea = sc_alp_mountain_redoubt_2 } }
+		ai_will_do = { base = 10 }
+	}
+	sc_alp_fortify_passes_2 = {
+		icon = generic_construction
+		visible = { has_idea = sc_alp_mountain_redoubt_2 }
+		available = { has_stability > 0.4 }
+		cost = 100
+		fire_only_once = yes
+		complete_effect = { swap_ideas = { remove_idea = sc_alp_mountain_redoubt_2 add_idea = sc_alp_mountain_redoubt_3 } }
+		ai_will_do = { base = 10 }
+	}
+	sc_alp_call_the_faithful = {
+		icon = generic_army_support
+		cost = 50
+		days_re_enable = 180
+		complete_effect = { add_manpower = 3000 }
+		ai_will_do = { base = 3 }
+	}
+}
+
+# ======================== FESTUNG NORD ========================
+sc_fno_category = {
+	# Cheap wargoal against any European neighbour or coastal state.
+	sc_fno_plan_invasion = {
+		icon = generic_prepare_civil_war
+		target_root_trigger = { tag = FNO }
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT = { tag = WST }
+				NOT = { tag = ROOT }
+				capital_scope = { is_on_continent = europe }
+				any_owned_state = {
+					OR = {
+						any_neighbor_state = { is_owned_by = ROOT }
+						is_coastal = yes
+					}
+				}
+			}
+		}
+		available = { has_war = no }
+		cost = 50
+		days_re_enable = 180
+		complete_effect = { create_wargoal = { type = annex_everything target = FROM } }
+		ai_will_do = {
+			base = 2
+			modifier = { factor = 5 FROM = { tag = SWE } }
+		}
+	}
+	# Colonise wasteland that is still too dangerous for anyone else.
+	sc_fno_colonize = {
+		icon = generic_construction
+		state_target = yes
+		on_map_mode = map_and_decisions_view
+		target_root_trigger = { tag = FNO }
+		target_trigger = {
+			FROM = {
+				sc_adjacent_wasteland = yes
+				check_variable = { sc_danger < 50 }
+				NOT = { has_state_flag = sc_irradiated }
+			}
+		}
+		cost = 25
+		days_remove = 30
+		remove_effect = { sc_wastes_claim = yes }
+		ai_will_do = { base = 8 }
+	}
+}
+
+# ======================== ORDENSSTAAT BANAT ========================
+sc_bnt_category = {
+	sc_bnt_holy_war = {
+		icon = generic_prepare_civil_war
+		target_root_trigger = { tag = BNT }
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT = { tag = WST }
+				NOT = { tag = ROOT }
+				any_owned_state = { any_neighbor_state = { is_owned_by = ROOT } }
+			}
+		}
+		cost = 25
+		days_re_enable = 90
+		complete_effect = {
+			create_wargoal = { type = annex_everything target = FROM }
+			add_war_support = 0.05
+		}
+		ai_will_do = { base = 10 }
+	}
+	sc_bnt_blood_levy = {
+		icon = generic_army_support
+		cost = 0
+		days_re_enable = 120
+		complete_effect = {
+			add_manpower = 5000
+			add_stability = -0.1
+		}
+		ai_will_do = { base = 2 }
+	}
+}
+
+# ======================== THE BLACK ORDER ========================
+sc_blo_category = {
+	sc_blo_rites = {
+		icon = generic_political_discourse
+		cost = 30
+		days_re_enable = 30
+		complete_effect = {
+			add_to_variable = { sc_devotion = 15 }
+			sc_blo_update_devotion = yes
+		}
+		ai_will_do = { base = 5 modifier = { factor = 3 check_variable = { sc_devotion < 40 } } }
+	}
+	sc_blo_visions = {
+		icon = generic_political_discourse
+		cost = 15
+		days_re_enable = 60
+		complete_effect = { country_event = { id = sc_cult.1 } }
+		ai_will_do = { base = 2 }
+	}
+	sc_blo_knighthood = {
+		icon = generic_army_support
+		cost = 50
+		days_re_enable = 120
+		complete_effect = {
+			add_to_variable = { sc_devotion = 10 }
+			sc_blo_update_devotion = yes
+			army_experience = 10
+		}
+		ai_will_do = { base = 2 }
+	}
+}
+
+# ======================== UNITED KINGDOM ========================
+sc_eng_unrest_category = {
+	# Missions: deal with each uprising before the timer runs out.
+	sc_eng_clydeside_mission = {
+		icon = generic_prepare_civil_war
+		allowed = { tag = ENG }
+		activation = { always = no }
+		available = { has_country_flag = sc_clydeside_resolved }
+		days_mission_timeout = 270
+		is_good = no
+		complete_effect = { remove_ideas = sc_eng_red_clydeside }
+		timeout_effect = {
+			remove_ideas = sc_eng_red_clydeside
+			start_civil_war = { ideology = communism size = 0.3 }
+		}
+	}
+	sc_eng_ireland_mission = {
+		icon = generic_prepare_civil_war
+		allowed = { tag = ENG }
+		activation = { always = no }
+		available = { has_country_flag = sc_ireland_resolved }
+		days_mission_timeout = 365
+		is_good = no
+		complete_effect = { remove_ideas = sc_eng_irish_troubles }
+		timeout_effect = {
+			remove_ideas = sc_eng_irish_troubles
+			sc_eng_lose_ulster = yes
+			add_stability = -0.1
+		}
+	}
+
+	sc_eng_clydeside_crackdown = {
+		icon = generic_army_support
+		visible = { has_idea = sc_eng_red_clydeside NOT = { has_country_flag = sc_clydeside_resolved } }
+		available = { has_war_support > 0.3 }
+		cost = 75
+		complete_effect = {
+			set_country_flag = sc_clydeside_resolved
+			add_war_support = -0.05
+			add_manpower = -3000
+		}
+		ai_will_do = { base = 5 }
+	}
+	sc_eng_clydeside_concessions = {
+		icon = generic_political_discourse
+		visible = { has_idea = sc_eng_red_clydeside NOT = { has_country_flag = sc_clydeside_resolved } }
+		cost = 50
+		complete_effect = {
+			set_country_flag = sc_clydeside_resolved
+			add_popularity = { ideology = communism popularity = 0.1 }
+			add_stability = 0.05
+		}
+		ai_will_do = { base = 3 }
+	}
+	sc_eng_ireland_crackdown = {
+		icon = generic_army_support
+		visible = { has_idea = sc_eng_irish_troubles NOT = { has_country_flag = sc_ireland_resolved } }
+		available = { has_manpower > 10000 }
+		cost = 75
+		complete_effect = {
+			set_country_flag = sc_ireland_resolved
+			add_manpower = -10000
+			add_war_support = -0.05
+			if = { limit = { country_exists = IRE } IRE = { add_war_support = 0.15 } }
+		}
+		ai_will_do = { base = 3 }
+	}
+	sc_eng_ireland_home_rule = {
+		icon = generic_political_discourse
+		visible = { has_idea = sc_eng_irish_troubles NOT = { has_country_flag = sc_ireland_resolved } }
+		cost = 50
+		complete_effect = {
+			set_country_flag = sc_ireland_resolved
+			sc_eng_lose_ulster = yes
+			add_stability = 0.1
+		}
+		ai_will_do = { base = 5 }
+	}
+}

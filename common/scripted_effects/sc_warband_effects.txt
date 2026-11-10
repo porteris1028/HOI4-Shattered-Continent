@@ -24,7 +24,11 @@ sc_init_forage = {
 		# Bigger, richer states feed an army for longer.
 		if = { limit = { state_population_k > 1000 } add_to_variable = { sc_forage = 20 } }
 		if = { limit = { state_population_k > 3000 } add_to_variable = { sc_forage = 20 } }
+		# Raider-infested land has been picked over already.
+		if = { limit = { check_variable = { sc_danger > 60 } } subtract_from_variable = { sc_forage = 20 } }
 	}
+	# Nothing safe to eat grows in the fallout zones.
+	if = { limit = { has_state_flag = sc_irradiated } set_variable = { sc_forage = 0 } }
 }
 
 # Country scope. Runs monthly from on_actions.
@@ -88,6 +92,8 @@ sc_warband_arrive = {
 			set_state_flag = sc_raided
 			WST = { transfer_state = PREV }
 		}
+
+		sc_wasteland_arrival_check = yes
 
 		var:sc_march_dest = {
 			sc_init_forage = yes

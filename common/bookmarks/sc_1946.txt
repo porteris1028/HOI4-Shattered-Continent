@@ -7,14 +7,26 @@ bookmarks = {
 		default_country = "HST"
 		default = yes
 
+		# Featured nations (top row)
 		HST = { history = "HST_GAMEPLAY_DESC" ideology = neutrality }
-		LGN = { history = "LGN_GAMEPLAY_DESC" ideology = neutrality }
-		ALP = { history = "ALP_GAMEPLAY_DESC" ideology = fascism }
+		FNO = { history = "FNO_GAMEPLAY_DESC" ideology = fascism }
+		BLO = { history = "BLO_GAMEPLAY_DESC" ideology = fascism }
+		AKR = { history = "AKR_GAMEPLAY_DESC" ideology = democratic }
+		BLF = { history = "BLF_GAMEPLAY_DESC" ideology = communism }
 		HNS = { history = "HNS_GAMEPLAY_DESC" ideology = democratic }
-		LYO = { history = "LYO_GAMEPLAY_DESC" ideology = communism }
+		ENG = { history = "SC_ENG_GAMEPLAY_DESC" ideology = democratic }
 
 		"---" = { history = "SC_OTHER_GAMEPLAY_DESC" }
-		FNO = { minor = yes history = "FNO_GAMEPLAY_DESC" ideology = fascism }
+		ALP = { minor = yes history = "ALP_GAMEPLAY_DESC" ideology = fascism }
+		BNT = { minor = yes history = "BNT_GAMEPLAY_DESC" ideology = fascism }
+		LGN = { minor = yes history = "LGN_GAMEPLAY_DESC" ideology = neutrality }
+		ASH = { minor = yes history = "ASH_GAMEPLAY_DESC" ideology = neutrality }
+		LYO = { minor = yes history = "LYO_GAMEPLAY_DESC" ideology = communism }
+		BPF = { minor = yes history = "BPF_GAMEPLAY_DESC" ideology = communism }
+		HLY = { minor = yes history = "HLY_GAMEPLAY_DESC" ideology = neutrality }
+		DNH = { minor = yes history = "DNH_GAMEPLAY_DESC" ideology = neutrality }
+		WCH = { minor = yes history = "WCH_GAMEPLAY_DESC" ideology = neutrality }
+		TBF = { minor = yes history = "TBF_GAMEPLAY_DESC" ideology = communism }
 
 		effect = { randomize_weather = 22345 }
 	}

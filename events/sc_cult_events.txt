@@ -1,0 +1,45 @@
+add_namespace = sc_cult
+
+# The Reichsfuehrer's visions.
+country_event = {
+	id = sc_cult.1
+	title = sc_cult.1.t
+	desc = sc_cult.1.d
+	is_triggered_only = yes
+
+	option = {
+		name = sc_cult.1.a
+		random_list = {
+			50 = {
+				add_to_variable = { sc_devotion = 20 }
+				add_war_support = 0.03
+			}
+			50 = {
+				add_to_variable = { sc_devotion = 5 }
+				add_political_power = -50
+				add_stability = -0.03
+			}
+		}
+		sc_blo_update_devotion = yes
+	}
+}
+
+# Heresy in the ranks.
+country_event = {
+	id = sc_cult.2
+	title = sc_cult.2.t
+	desc = sc_cult.2.d
+	is_triggered_only = yes
+
+	option = {
+		name = sc_cult.2.a	# purge
+		add_to_variable = { sc_devotion = 15 }
+		add_manpower = -2000
+		add_stability = -0.05
+		sc_blo_update_devotion = yes
+	}
+	option = {
+		name = sc_cult.2.b	# look away
+		add_stability = -0.1
+	}
+}

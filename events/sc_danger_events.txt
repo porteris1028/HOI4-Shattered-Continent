@@ -1,0 +1,56 @@
+add_namespace = sc_danger
+
+# Raiders strike from the wasteland across our border.
+country_event = {
+	id = sc_danger.1
+	title = sc_danger.1.t
+	desc = sc_danger.1.d
+	is_triggered_only = yes
+
+	option = {
+		name = sc_danger.1.a	# drive them off
+		add_manpower = -800
+		army_experience = 2
+	}
+	option = {
+		name = sc_danger.1.b	# pay them off
+		add_political_power = -40
+	}
+}
+
+# Ambush in the wastes.
+country_event = {
+	id = sc_danger.2
+	title = sc_danger.2.t
+	desc = sc_danger.2.d
+	is_triggered_only = yes
+
+	option = {
+		name = sc_danger.2.a
+		add_manpower = -1500
+		add_equipment_to_stockpile = { type = infantry_equipment_1 amount = -400 }
+		if = {
+			limit = { has_country_flag = sc_nomadic }
+			subtract_from_variable = { warband_supplies = 10 }
+			clamp_variable = { var = warband_supplies min = 0 max = 100 }
+		}
+	}
+}
+
+# A cache in the ruins.
+country_event = {
+	id = sc_danger.3
+	title = sc_danger.3.t
+	desc = sc_danger.3.d
+	is_triggered_only = yes
+
+	option = {
+		name = sc_danger.3.a
+		add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 800 producer = ROOT }
+		if = {
+			limit = { has_country_flag = sc_nomadic }
+			add_to_variable = { warband_supplies = 10 }
+			clamp_variable = { var = warband_supplies min = 0 max = 100 }
+		}
+	}
+}

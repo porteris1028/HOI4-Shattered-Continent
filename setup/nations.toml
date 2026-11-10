@@ -1,0 +1,653 @@
+# =====================================================================
+#  SHATTERED CONTINENT - NATION DATA
+#
+#  Every new nation is defined here. After editing, run:
+#      python3 tools/build_nations.py
+#  That regenerates tags, country files, history, leaders, names, flags
+#  and starting armies. Do not hand-edit the generated files.
+#
+#  Fields (most are optional, defaults in brackets):
+#    tag            3 letters, must not clash with vanilla (tools/check_tags.py)
+#    name/def/adj   country name, "the ..." form, adjective
+#    group          ss_holdout | wehrmacht | red_army | cossack | warlord |
+#                   raider | commune | free_state | siberian_general  (for docs/sorting)
+#    ideology       democratic | communism | fascism | neutrality
+#    sub_ideology   leader ideology, e.g. nazism, marxism, liberalism, despotism, anarchism
+#    popularities   { democratic, communism, fascism, neutrality }  (should add to 100)
+#    stability, war_support   0.0 - 1.0
+#    color          [r, g, b] map colour
+#    culture        western | eastern  [western]
+#    tech           basic | veteran | mountain  (+ techs the template needs are added automatically)
+#    nomadic        true = roaming warband mechanic
+#    supplies       starting warband supplies (nomads only) [50]
+#    leader         { key, name }
+#    template       { name, regiments = [...], support = [...] }
+#    divisions      list of division names spawned at the capital
+#    experience     starting division experience 0.0 - 1.0 [0.3]
+#    equipment      infantry equipment stockpile [2000]
+#    ideas          national spirits (defined in common/ideas)
+#    country_flags  script flags set at start
+#    flag           { pattern, colors = [[r,g,b], ...] }
+#                   patterns: horizontal, vertical, diagonal, triangle, cross,
+#                             band, mountain, saltire, chevron, plain
+#    desc           bookmark / country-select text
+#    extra          raw HoI4 script appended to the history file
+# =====================================================================
+
+
+# ---------------------------------------------------------------------
+#  PLACEHOLDER
+# ---------------------------------------------------------------------
+[[nation]]
+tag = "WST"
+name = "No Man's Land"
+def = "No Man's Land"
+adj = "Wasteland"
+group = "placeholder"
+ideology = "neutrality"
+popularities = { democratic = 0, communism = 0, fascism = 0, neutrality = 100 }
+stability = 0.5
+war_support = 0.0
+color = [72, 70, 66]
+ideas = ["sc_no_mans_land"]
+flag = { pattern = "diagonal", colors = [[60, 58, 55], [110, 105, 95]] }
+desc = "Burned farms, poisoned rivers and the scattered survivors of a dead continent."
+
+
+# ---------------------------------------------------------------------
+#  SS HOLDOUTS
+# ---------------------------------------------------------------------
+[[nation]]
+tag = "ALP"
+name = "Alpenfestung"
+def = "the Alpenfestung"
+adj = "Redoubt"
+group = "ss_holdout"
+ideology = "fascism"
+sub_ideology = "nazism"
+popularities = { democratic = 2, communism = 3, fascism = 80, neutrality = 15 }
+stability = 0.55
+war_support = 0.85
+color = [40, 40, 46]
+research_slots = 3
+tech = "mountain"
+leader = { key = "ALP_kessler", name = "Ernst Kessler" }
+template = { name = "Gebirgs-Kampfgruppe", regiments = ["mountaineers", "mountaineers", "mountaineers"], support = ["engineer"] }
+divisions = ["1. Gebirgs-Kampfgruppe", "2. Gebirgs-Kampfgruppe", "3. Gebirgs-Kampfgruppe"]
+experience = 0.5
+equipment = 3000
+ideas = ["sc_alp_mountain_redoubt_1"]
+country_flags = ["sc_ss_state"]
+flag = { pattern = "mountain", colors = [[25, 25, 28], [190, 190, 195], [245, 245, 245]] }
+desc = "Munich burned in the second sun. The SS divisions that had pulled back into the Tyrol watched the cloud rise over the Bavarian plain, then sealed the passes behind them. The Alpenfestung does not expand. It endures: every valley a fortress, every peak a gun position."
+
+[[nation]]
+tag = "FNO"
+name = "Festung Nord"
+def = "Festung Nord"
+adj = "Nordic Garrison"
+group = "ss_holdout"
+ideology = "fascism"
+sub_ideology = "nazism"
+popularities = { democratic = 10, communism = 5, fascism = 65, neutrality = 20 }
+stability = 0.45
+war_support = 0.8
+color = [88, 84, 70]
+research_slots = 3
+tech = "veteran"
+leader = { key = "FNO_brandt", name = "Heinrich Brandt" }
+template = { name = "Festungs-Division", regiments = ["infantry", "infantry", "infantry", "infantry"], support = ["engineer", "recon"] }
+divisions = ["Festungs-Division Oslo", "Festungs-Division Bergen", "Festungs-Division Trondheim", "Festungs-Division Narvik", "Kampfgruppe Skagerrak"]
+experience = 0.35
+equipment = 5000
+ideas = ["sc_fno_northern_offensive"]
+country_flags = ["sc_ss_state"]
+flag = { pattern = "band", colors = [[95, 92, 78], [20, 20, 20], [150, 150, 150]] }
+desc = "Four hundred thousand German soldiers were stranded in Norway when the Reich died. Their SS commissars shot the officers who wanted to surrender. Now Festung Nord looks across the water at a weak Sweden, an empty Denmark and the leaderless forests of Finland, and sees living space."
+
+[[nation]]
+tag = "BNT"
+name = "Ordensstaat Banat"
+def = "the Ordensstaat Banat"
+adj = "Banat"
+group = "ss_holdout"
+ideology = "fascism"
+sub_ideology = "nazism"
+popularities = { democratic = 0, communism = 2, fascism = 93, neutrality = 5 }
+stability = 0.35
+war_support = 1.0
+color = [60, 15, 15]
+research_slots = 2
+tech = "mountain"
+leader = { key = "BNT_reiter", name = "Otto Reiter" }
+template = { name = "SS-Freiwilligen-Brigade", regiments = ["mountaineers", "mountaineers", "infantry", "infantry"], support = ["engineer"] }
+divisions = ["Brigade Prinz Eugen", "Brigade Temeswar", "Brigade Werschetz"]
+experience = 0.55
+equipment = 2500
+ideas = ["sc_bnt_fanatical_order"]
+country_flags = ["sc_ss_state"]
+flag = { pattern = "saltire", colors = [[20, 20, 20], [140, 20, 20]] }
+desc = "In the flat black-earth country of the Banat, the most fanatical SS division in the Balkans never got the news that the war was lost, or refused to believe it. The Ordensstaat is a crusading order. It knows no peace, only the next campaign, and it will burn itself out before it ever makes terms."
+
+[[nation]]
+tag = "BLO"
+name = "The Black Order"
+def = "the Black Order"
+adj = "Black Order"
+group = "ss_holdout"
+ideology = "fascism"
+sub_ideology = "nazism"
+popularities = { democratic = 0, communism = 0, fascism = 90, neutrality = 10 }
+stability = 0.6
+war_support = 0.75
+color = [15, 15, 15]
+research_slots = 3
+tech = "veteran"
+leader = { key = "BLO_himmler", name = "Heinrich Himmler" }
+template = { name = "Ordensgarde", regiments = ["infantry", "infantry", "infantry"], support = ["military_police", "engineer"] }
+divisions = ["Ordensgarde Brabant", "Ordensgarde Flandern", "Ordensgarde Wallonien"]
+experience = 0.3
+equipment = 3000
+ideas = ["sc_blo_cult_of_the_order"]
+country_flags = ["sc_ss_state", "sc_cult_state"]
+flag = { pattern = "band", colors = [[10, 10, 10], [190, 160, 70], [10, 10, 10]] }
+desc = "Himmler was in Brussels when Berlin vanished. He took it as a sign. In the ruins of the old capital of Europe he has built his Ordensstaat: a closed, ritual society of black-clad knights, pagan rites and absolute obedience. Its people are kept in line by devotion and by fear, and the Reichsfuehrer's visions grow stranger every month."
+
+
+# ---------------------------------------------------------------------
+#  WEHRMACHT AND RED ARMY REMNANTS
+# ---------------------------------------------------------------------
+[[nation]]
+tag = "WCH"
+name = "Heeresgruppe Weichsel"
+def = "Heeresgruppe Weichsel"
+adj = "Weichsel"
+group = "wehrmacht"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 10, communism = 0, fascism = 30, neutrality = 60 }
+stability = 0.5
+war_support = 0.65
+color = [110, 120, 130]
+research_slots = 3
+tech = "veteran"
+leader = { key = "WCH_von_arnim", name = "Generaloberst Kurt von Arnim" }
+template = { name = "Infanterie-Division", regiments = ["infantry", "infantry", "infantry", "artillery_brigade"], support = ["engineer", "recon"] }
+divisions = ["Korps Pommern", "Korps Stettin", "Korps Danzig", "Korps Oder"]
+experience = 0.4
+equipment = 4000
+flag = { pattern = "cross", colors = [[220, 220, 220], [30, 30, 30]] }
+desc = "Army Group Vistula held the line against the Red Army for two years. When Berlin was destroyed, its generals hanged the SS liaison officers and declared a military government in Pomerania. They hate the SS and the Soviets about equally."
+
+[[nation]]
+tag = "KRL"
+name = "Kurland Pocket"
+def = "the Kurland Pocket"
+adj = "Kurland"
+group = "wehrmacht"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 5, communism = 0, fascism = 35, neutrality = 60 }
+stability = 0.4
+war_support = 0.7
+color = [130, 130, 100]
+tech = "veteran"
+leader = { key = "KRL_hilpert", name = "General Albrecht Hilpert" }
+template = { name = "Kurland-Division", regiments = ["infantry", "infantry", "infantry"], support = ["engineer"] }
+divisions = ["Kurland-Division Libau", "Kurland-Division Windau"]
+experience = 0.5
+equipment = 2500
+flag = { pattern = "horizontal", colors = [[130, 130, 100], [40, 40, 40], [130, 130, 100]] }
+desc = "Cut off on the Latvian coast since 1944, the Kurland Pocket has been besieged so long that it no longer remembers anything else. Its soldiers have married local women and planted fields behind the trenches."
+
+[[nation]]
+tag = "BLF"
+name = "Belorussian Front"
+def = "the Belorussian Front"
+adj = "Frontovik"
+group = "red_army"
+ideology = "communism"
+sub_ideology = "stalinism"
+popularities = { democratic = 0, communism = 80, fascism = 0, neutrality = 20 }
+stability = 0.45
+war_support = 0.8
+color = [150, 20, 20]
+research_slots = 3
+tech = "veteran"
+culture = "eastern"
+leader = { key = "BLF_sokolov", name = "Marshal Pavel Sokolov" }
+template = { name = "Rifle Division", regiments = ["infantry", "infantry", "infantry", "infantry", "artillery_brigade"], support = ["engineer", "recon"] }
+divisions = ["3rd Shock Army", "8th Guards Army", "47th Army", "61st Army", "1st Polish Army"]
+experience = 0.45
+equipment = 6000
+flag = { pattern = "vertical", colors = [[150, 20, 20], [200, 170, 40], [150, 20, 20]] }
+desc = "The 1st Belorussian Front stalled on the Vistula, then watched the sky light up to the west. Moscow is silent. Marshal Sokolov rules the old front line as a military soviet, and still talks about finishing the march on Berlin, though there is no Berlin left."
+
+[[nation]]
+tag = "VRA"
+name = "Volga Military Soviet"
+def = "the Volga Military Soviet"
+adj = "Volga"
+group = "red_army"
+ideology = "communism"
+sub_ideology = "leninism"
+popularities = { democratic = 5, communism = 70, fascism = 0, neutrality = 25 }
+stability = 0.4
+war_support = 0.6
+color = [170, 60, 50]
+culture = "eastern"
+leader = { key = "VRA_garin", name = "General Mikhail Garin" }
+template = { name = "Rifle Division", regiments = ["infantry", "infantry", "infantry"], support = ["recon"] }
+divisions = ["Kazan Garrison", "Samara Garrison", "Saratov Garrison"]
+experience = 0.2
+equipment = 3000
+flag = { pattern = "horizontal", colors = [[170, 60, 50], [230, 230, 230], [40, 70, 140]] }
+desc = "The reserve armies on the Volga outlived the government that raised them. The Volga Soviet holds the river cities and the factories that were moved east in 1941. It claims to be the true Soviet Union. So does everyone else."
+
+
+# ---------------------------------------------------------------------
+#  COSSACK HOSTS
+# ---------------------------------------------------------------------
+[[nation]]
+tag = "HST"
+name = "Volkov's Host"
+def = "Volkov's Host"
+adj = "Cossack"
+group = "warlord"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 0, communism = 15, fascism = 10, neutrality = 75 }
+stability = 0.4
+war_support = 0.8
+color = [140, 110, 40]
+culture = "eastern"
+nomadic = true
+supplies = 60
+leader = { key = "HST_volkov", name = "Grigory Volkov" }
+template = { name = "Sotnia", regiments = ["cavalry", "cavalry", "cavalry"], support = ["recon"] }
+divisions = ["1st Sotnia", "2nd Sotnia", "3rd Sotnia"]
+experience = 0.6
+equipment = 2500
+flag = { pattern = "diagonal", colors = [[170, 130, 50], [30, 25, 20]] }
+desc = "Ataman Volkov's riders have no home and want none. They take what the land gives, and when it gives nothing more, they ride on.\n\n§YRoaming warlord:§! you must keep moving your camp to feed your army."
+
+[[nation]]
+tag = "DNH"
+name = "Don Host"
+def = "the Don Host"
+adj = "Don Cossack"
+group = "cossack"
+ideology = "neutrality"
+sub_ideology = "oligarchism"
+popularities = { democratic = 15, communism = 10, fascism = 10, neutrality = 65 }
+stability = 0.55
+war_support = 0.6
+color = [40, 80, 160]
+culture = "eastern"
+leader = { key = "DNH_kaledin", name = "Ataman Pyotr Kaledin" }
+template = { name = "Don Cossack Regiment", regiments = ["cavalry", "cavalry", "infantry", "infantry"], support = ["recon"] }
+divisions = ["Novocherkassk Regiment", "Rostov Regiment", "Upper Don Regiment"]
+experience = 0.4
+equipment = 2500
+flag = { pattern = "horizontal", colors = [[40, 80, 160], [220, 190, 40], [190, 30, 30]] }
+desc = "When the commissars fled, the stanitsas of the Don elected an ataman for the first time in a generation. The Don Host is a free Cossack republic of horsemen and wheat farmers, and the richest land between the Dnieper and the Volga."
+
+[[nation]]
+tag = "URH"
+name = "Ural Host"
+def = "the Ural Host"
+adj = "Ural Cossack"
+group = "cossack"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 5, communism = 15, fascism = 5, neutrality = 75 }
+stability = 0.45
+war_support = 0.7
+color = [60, 130, 120]
+culture = "eastern"
+leader = { key = "URH_tolstov", name = "Ataman Vladimir Tolstov" }
+template = { name = "Ural Cossack Regiment", regiments = ["cavalry", "cavalry", "cavalry"], support = ["recon"] }
+divisions = ["Orenburg Regiment", "Uralsk Regiment"]
+experience = 0.45
+equipment = 1800
+flag = { pattern = "triangle", colors = [[60, 130, 120], [220, 220, 220]] }
+desc = "The Ural Host guards the steppe gateway between Europe and Asia. Its ataman taxes every caravan, every refugee column and every Siberian general's envoy that passes through Orenburg."
+
+
+# ---------------------------------------------------------------------
+#  RAIDERS (roaming)
+# ---------------------------------------------------------------------
+[[nation]]
+tag = "LGN"
+name = "The Lost Legion"
+def = "the Lost Legion"
+adj = "Legionary"
+group = "warlord"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 10, communism = 15, fascism = 15, neutrality = 60 }
+stability = 0.3
+war_support = 0.7
+color = [90, 110, 80]
+nomadic = true
+supplies = 50
+leader = { key = "LGN_dacosta", name = "Captain Rafael Da Costa" }
+template = { name = "Legion Cohort", regiments = ["infantry", "infantry", "infantry"], support = ["artillery"] }
+divisions = ["First Cohort", "Second Cohort", "Third Cohort"]
+experience = 0.5
+equipment = 2500
+flag = { pattern = "triangle", colors = [[85, 105, 70], [235, 230, 210]] }
+desc = "Frenchmen, Poles, Germans, Italians and Americans: deserters from every army that was stuck in the Normandy hedgerows. They follow Captain Da Costa because he keeps them fed.\n\n§YRoaming warlord:§! you must keep moving your camp to feed your army."
+
+[[nation]]
+tag = "ASH"
+name = "The Ashen Riders"
+def = "the Ashen Riders"
+adj = "Ashen"
+group = "raider"
+ideology = "neutrality"
+sub_ideology = "anarchism"
+popularities = { democratic = 0, communism = 10, fascism = 10, neutrality = 80 }
+stability = 0.25
+war_support = 0.9
+color = [120, 115, 105]
+nomadic = true
+supplies = 40
+leader = { key = "ASH_grau", name = "\"Der Graue\"" }
+template = { name = "Scavenger Band", regiments = ["infantry", "infantry", "cavalry"], support = [] }
+divisions = ["Ash Band", "Cinder Band", "Bone Band"]
+experience = 0.4
+equipment = 1500
+ideas = ["sc_ash_children_of_the_fire"]
+flag = { pattern = "chevron", colors = [[50, 50, 50], [150, 145, 135]] }
+desc = "They came out of the fallout zone around Berlin: grey-faced, hairless, coughing and fearless. Nobody knows who leads them. They raid the edges of the wasteland and vanish back into places no sane army will follow.\n\n§YRoaming warlord:§! can enter irradiated zones with half the penalty."
+
+[[nation]]
+tag = "PVR"
+name = "Po Valley Brigands"
+def = "the Po Valley Brigands"
+adj = "Brigand"
+group = "raider"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 5, communism = 20, fascism = 20, neutrality = 55 }
+stability = 0.35
+war_support = 0.6
+color = [150, 120, 90]
+nomadic = true
+supplies = 55
+leader = { key = "PVR_ferrante", name = "Luca \"il Lupo\" Ferrante" }
+template = { name = "Banda", regiments = ["infantry", "infantry", "cavalry"], support = ["recon"] }
+divisions = ["Banda Nera", "Banda Rossa", "Banda del Fiume"]
+experience = 0.35
+equipment = 2000
+flag = { pattern = "vertical", colors = [[150, 120, 90], [40, 30, 25], [150, 120, 90]] }
+desc = "Ex-fascist militia, ex-partisans and ex-carabinieri, now just brigands, rule the flooded rice fields of the Po by fear and ransom.\n\n§YRoaming warlord:§! you must keep moving your camp to feed your army."
+
+[[nation]]
+tag = "CRW"
+name = "Carpathian Wolves"
+def = "the Carpathian Wolves"
+adj = "Carpathian"
+group = "raider"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 5, communism = 10, fascism = 25, neutrality = 60 }
+stability = 0.35
+war_support = 0.75
+color = [80, 60, 50]
+culture = "eastern"
+nomadic = true
+supplies = 50
+tech = "mountain"
+leader = { key = "CRW_hutsul", name = "Taras Hutsul" }
+template = { name = "Wolf Pack", regiments = ["mountaineers", "mountaineers"], support = ["recon"] }
+divisions = ["Black Pack", "Grey Pack"]
+experience = 0.5
+equipment = 1500
+flag = { pattern = "mountain", colors = [[80, 60, 50], [40, 40, 40], [200, 200, 200]] }
+desc = "Mountain bands of every nation and none, sweeping down from the Carpathians into the Hungarian and Galician plains.\n\n§YRoaming warlord:§! you must keep moving your camp to feed your army."
+
+
+# ---------------------------------------------------------------------
+#  COMMUNES AND FREE STATES
+# ---------------------------------------------------------------------
+[[nation]]
+tag = "HNS"
+name = "Free Hanse"
+def = "the Free Hanse"
+adj = "Hanseatic"
+group = "free_state"
+ideology = "democratic"
+sub_ideology = "liberalism"
+popularities = { democratic = 55, communism = 25, fascism = 5, neutrality = 15 }
+stability = 0.6
+war_support = 0.35
+color = [170, 30, 40]
+research_slots = 3
+elections = true
+leader = { key = "HNS_albers", name = "Margarete Albers" }
+template = { name = "Buergerwehr", regiments = ["infantry", "infantry", "infantry"], support = [] }
+divisions = ["Buergerwehr Hamburg", "Buergerwehr Bremen"]
+experience = 0.1
+equipment = 2500
+flag = { pattern = "horizontal", colors = [[255, 255, 255], [175, 25, 35]] }
+desc = "Far enough from the blasts to survive, the dockworkers and merchants of the Hanseatic ports took over when the occupation armies fell apart. The Free Hanse trades with anyone who has fuel or grain, including the Americans, and arms every citizen who can hold a rifle."
+
+[[nation]]
+tag = "LYO"
+name = "Lyon Commune"
+def = "the Lyon Commune"
+adj = "Lyonnais"
+group = "commune"
+ideology = "communism"
+sub_ideology = "marxism"
+popularities = { democratic = 25, communism = 60, fascism = 0, neutrality = 15 }
+stability = 0.5
+war_support = 0.5
+color = [200, 90, 40]
+research_slots = 3
+leader = { key = "LYO_marchand", name = "Lucien Marchand" }
+template = { name = "Brigade des Maquis", regiments = ["infantry", "infantry", "infantry"], support = ["recon"] }
+divisions = ["1re Brigade des Maquis", "2e Brigade des Maquis"]
+experience = 0.3
+equipment = 2000
+flag = { pattern = "vertical", colors = [[230, 180, 40], [190, 30, 30], [190, 30, 30]] }
+desc = "The Resistance took Lyon when the Germans withdrew and never gave it up. The Commune promises bread and justice, and the Rhone valley is the last fertile land in a starving France."
+
+[[nation]]
+tag = "RWC"
+name = "Ruhr Workers' Councils"
+def = "the Ruhr Workers' Councils"
+adj = "Ruhr"
+group = "commune"
+ideology = "neutrality"
+sub_ideology = "anarchism"
+popularities = { democratic = 15, communism = 35, fascism = 0, neutrality = 50 }
+stability = 0.45
+war_support = 0.45
+color = [60, 60, 60]
+leader = { key = "RWC_council", name = "The Central Council" }
+template = { name = "Arbeiterwehr", regiments = ["infantry", "infantry", "infantry"], support = ["engineer"] }
+divisions = ["Arbeiterwehr Essen", "Arbeiterwehr Dortmund"]
+experience = 0.15
+equipment = 3500
+flag = { pattern = "diagonal", colors = [[200, 30, 30], [20, 20, 20]] }
+desc = "The miners and steelworkers of the Ruhr have run their own pits since the bosses fled. There is no state here, only councils of delegates that can be recalled at any time, and a lot of rifles."
+
+[[nation]]
+tag = "OSL"
+name = "Free Republic of Ossola"
+def = "the Free Republic of Ossola"
+adj = "Ossolan"
+group = "commune"
+ideology = "democratic"
+sub_ideology = "socialism"
+popularities = { democratic = 45, communism = 40, fascism = 0, neutrality = 15 }
+stability = 0.5
+war_support = 0.55
+color = [40, 140, 70]
+tech = "mountain"
+elections = true
+leader = { key = "OSL_tibaldi", name = "Ettore Tibaldi" }
+template = { name = "Brigata Garibaldi", regiments = ["mountaineers", "infantry", "infantry"], support = [] }
+divisions = ["Brigata Valtoce", "Brigata Garibaldi"]
+experience = 0.35
+equipment = 1500
+flag = { pattern = "horizontal", colors = [[40, 140, 70], [240, 240, 240], [200, 40, 40]] }
+desc = "In 1944 Italian partisans declared a free republic in the Ossola valleys. In this world it survived the fall of everything else. It is a mountain democracy of partisans, priests and smugglers on the Swiss border."
+
+[[nation]]
+tag = "BZH"
+name = "Free Brittany"
+def = "Free Brittany"
+adj = "Breton"
+group = "free_state"
+ideology = "democratic"
+sub_ideology = "conservatism"
+popularities = { democratic = 60, communism = 15, fascism = 5, neutrality = 20 }
+stability = 0.55
+war_support = 0.4
+color = [30, 30, 30]
+elections = true
+leader = { key = "BZH_le_goff", name = "Yann Le Goff" }
+template = { name = "Bataillon Breton", regiments = ["infantry", "infantry", "infantry"], support = [] }
+divisions = ["Bataillon de Brest", "Bataillon de Rennes"]
+experience = 0.2
+equipment = 2000
+flag = { pattern = "horizontal", colors = [[30, 30, 30], [240, 240, 240], [30, 30, 30], [240, 240, 240]] }
+desc = "Brittany's fishing towns kept the British lifeline open when the Normandy beachheads collapsed. Free Brittany is a fragile coastal democracy, kept alive by British trawlers and American aid ships."
+
+[[nation]]
+tag = "AKR"
+name = "Home Army Republic"
+def = "the Home Army Republic"
+adj = "Polish"
+group = "free_state"
+ideology = "democratic"
+sub_ideology = "conservatism"
+popularities = { democratic = 55, communism = 10, fascism = 5, neutrality = 30 }
+stability = 0.5
+war_support = 0.75
+color = [220, 70, 90]
+research_slots = 3
+culture = "eastern"
+leader = { key = "AKR_wrona", name = "General Tadeusz Wrona" }
+template = { name = "Home Army Division", regiments = ["infantry", "infantry", "infantry", "infantry"], support = ["recon", "engineer"] }
+divisions = ["Kedyw Division", "Krakow Division", "Lublin Division", "Kielce Division"]
+experience = 0.4
+equipment = 3500
+flag = { pattern = "horizontal", colors = [[240, 240, 240], [215, 30, 50]] }
+desc = "Caught between the stalled Red Army and the Wehrmacht for two years, the Polish Home Army came out of the forests when both sides broke. Its republic holds the heart of Poland, surrounded by enemies on every side."
+
+[[nation]]
+tag = "BPF"
+name = "Balkan Partisan Federation"
+def = "the Balkan Partisan Federation"
+adj = "Partisan"
+group = "commune"
+ideology = "communism"
+sub_ideology = "marxism"
+popularities = { democratic = 15, communism = 70, fascism = 0, neutrality = 15 }
+stability = 0.55
+war_support = 0.8
+color = [170, 40, 40]
+research_slots = 3
+tech = "mountain"
+culture = "eastern"
+leader = { key = "BPF_vukovic", name = "Marshal Stjepan Vukovic" }
+template = { name = "Proletarian Brigade", regiments = ["mountaineers", "infantry", "infantry"], support = ["recon"] }
+divisions = ["1st Proletarian Brigade", "2nd Proletarian Brigade", "Bosnian Corps", "Montenegrin Corps"]
+experience = 0.5
+equipment = 3000
+flag = { pattern = "triangle", colors = [[30, 60, 150], [200, 30, 30]] }
+desc = "The partisans of Bosnia, Montenegro and Macedonia never needed Moscow and do not miss it. Their federation unites the mountain peoples of the Balkans against their old enemy, the SS order in the Banat."
+
+[[nation]]
+tag = "HLY"
+name = "Holy League"
+def = "the Holy League"
+adj = "Pontifical"
+group = "free_state"
+ideology = "neutrality"
+sub_ideology = "oligarchism"
+popularities = { democratic = 30, communism = 5, fascism = 5, neutrality = 60 }
+stability = 0.65
+war_support = 0.4
+color = [230, 210, 120]
+research_slots = 3
+leader = { key = "HLY_pius", name = "Pope Pius XII" }
+template = { name = "Guardia Pontificia", regiments = ["infantry", "infantry", "infantry"], support = [] }
+divisions = ["Guardia di Roma", "Guardia di Lazio"]
+experience = 0.15
+equipment = 2000
+flag = { pattern = "vertical", colors = [[230, 200, 60], [245, 245, 245]] }
+desc = "Rome survived the chain reaction, barely. The Pope opened the Vatican's granaries and the parishes of central Italy rallied to him. The Holy League is a church state, a relief agency and an army all at once, and it calls on every Catholic in the ruins of Europe."
+
+
+# ---------------------------------------------------------------------
+#  SIBERIAN GENERALS (east of the Urals)
+# ---------------------------------------------------------------------
+[[nation]]
+tag = "WSB"
+name = "West Siberian Military District"
+def = "the West Siberian Military District"
+adj = "West Siberian"
+group = "siberian_general"
+ideology = "communism"
+sub_ideology = "stalinism"
+popularities = { democratic = 0, communism = 75, fascism = 0, neutrality = 25 }
+stability = 0.5
+war_support = 0.6
+color = [160, 50, 70]
+research_slots = 3
+culture = "eastern"
+leader = { key = "WSB_ivanov", name = "Marshal Andrei Ivanov" }
+template = { name = "Siberian Rifle Division", regiments = ["infantry", "infantry", "infantry", "infantry"], support = ["recon", "engineer"] }
+divisions = ["Omsk Army", "Tyumen Army", "Tomsk Army"]
+experience = 0.3
+equipment = 5000
+flag = { pattern = "horizontal", colors = [[160, 50, 70], [240, 240, 240], [40, 120, 70]] }
+desc = "Marshal Ivanov holds Omsk and the evacuated factories of western Siberia. He claims to be Stalin's lawful successor and plans to march back over the Urals one day."
+
+[[nation]]
+tag = "CSB"
+name = "Yenisei Directorate"
+def = "the Yenisei Directorate"
+adj = "Yenisei"
+group = "siberian_general"
+ideology = "neutrality"
+sub_ideology = "despotism"
+popularities = { democratic = 10, communism = 35, fascism = 5, neutrality = 50 }
+stability = 0.45
+war_support = 0.5
+color = [70, 110, 150]
+culture = "eastern"
+leader = { key = "CSB_belov", name = "General Nikolai Belov" }
+template = { name = "Taiga Division", regiments = ["infantry", "infantry", "infantry"], support = ["recon"] }
+divisions = ["Krasnoyarsk Army", "Novosibirsk Army"]
+experience = 0.25
+equipment = 3000
+flag = { pattern = "band", colors = [[70, 110, 150], [240, 240, 240], [70, 110, 150]] }
+desc = "General Belov tore the red stars off his uniform the week Moscow went silent. The Directorate is a pragmatic junta that rules the Yenisei river towns and will deal with anyone, even Tokyo."
+
+[[nation]]
+tag = "TBF"
+name = "Transbaikal Front"
+def = "the Transbaikal Front"
+adj = "Transbaikal"
+group = "siberian_general"
+ideology = "communism"
+sub_ideology = "leninism"
+popularities = { democratic = 5, communism = 65, fascism = 5, neutrality = 25 }
+stability = 0.45
+war_support = 0.85
+color = [190, 90, 60]
+culture = "eastern"
+leader = { key = "TBF_orlov", name = "General Semyon Orlov" }
+template = { name = "Frontier Rifle Division", regiments = ["infantry", "infantry", "infantry", "cavalry"], support = ["recon", "engineer"] }
+divisions = ["Irkutsk Army", "Chita Army", "Ulan-Ude Army", "Baikal Cavalry Corps"]
+experience = 0.4
+equipment = 4500
+flag = { pattern = "triangle", colors = [[190, 90, 60], [240, 220, 60]] }
+desc = "The Transbaikal Front faces the Japanese Empire across the Amur, now that Japan has taken Vladivostok and the Pacific coast. It is the last Soviet army that still fights a real enemy."

@@ -19,3 +19,28 @@ sc_warband_well_fed = {
 	army_speed_factor = 0.1
 	army_morale_factor = 0.1
 }
+
+sc_radiation_sickness = {
+	icon = GFX_idea_generic_disjointed_gov
+	enable = { always = yes }
+	army_org_factor = -0.3
+	army_strength_factor = -0.15
+	monthly_population = -0.3
+	stability_factor = -0.1
+}
+
+sc_radiation_sickness_mild = {
+	icon = GFX_idea_generic_disjointed_gov
+	enable = { always = yes }
+	army_org_factor = -0.15
+	army_strength_factor = -0.07
+	monthly_population = -0.15
+}
+
+# Black Order devotion: values come from variables updated by sc_blo_update_devotion.
+sc_blo_devotion = {
+	icon = GFX_idea_generic_morale_bonus
+	enable = { always = yes }
+	stability_factor = sc_devotion_stability
+	war_support_factor = sc_devotion_war_support
+}

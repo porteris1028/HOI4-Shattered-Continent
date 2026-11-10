@@ -1,0 +1,13 @@
+# State scope. Nations that SURVIVED the chain reaction keep their European land.
+# Workshop this list! Anything not here is wiped to No Man's Land at game start.
+sc_is_spared_state = {
+	OR = {
+		is_owned_by = ENG	# Britain: stable-ish, but facing Irish and socialist uprisings
+		is_owned_by = IRE	# Ireland
+		is_owned_by = SWI	# Switzerland: the neutral bank vault of the ruins
+		is_owned_by = SWE	# Sweden: refuge for Danes, Norwegians and Finns; Festung Nord's target
+		is_owned_by = SPR	# Iberia: far from the blasts
+		is_owned_by = POR
+		is_owned_by = TUR	# Turkey keeps Thrace
+	}
+}

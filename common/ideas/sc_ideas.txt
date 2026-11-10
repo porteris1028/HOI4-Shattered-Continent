@@ -1,6 +1,6 @@
 ideas = {
 	country = {
-		# Keeps the placeholder WST tag from building armies or factories.
+		# ---------------- placeholder ----------------
 		sc_no_mans_land = {
 			picture = generic_disjointed_gov
 			allowed = { always = no }
@@ -11,6 +11,109 @@ ideas = {
 				production_speed_buildings_factor = -1
 				conscription_factor = -1
 				research_speed_factor = -1
+			}
+		}
+
+		# ---------------- Alpenfestung: DEFENCE ----------------
+		sc_alp_mountain_redoubt_1 = {
+			picture = generic_fortify_the_borders
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_defence_factor = 0.15
+				max_dig_in = 2
+				dig_in_speed_factor = 0.25
+				army_attack_factor = -0.1
+			}
+		}
+		sc_alp_mountain_redoubt_2 = {
+			picture = generic_fortify_the_borders
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_defence_factor = 0.25
+				max_dig_in = 4
+				dig_in_speed_factor = 0.5
+				army_attack_factor = -0.1
+			}
+		}
+		sc_alp_mountain_redoubt_3 = {
+			picture = generic_fortify_the_borders
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_defence_factor = 0.35
+				max_dig_in = 6
+				dig_in_speed_factor = 0.75
+				army_attack_factor = -0.1
+				supply_consumption_factor = -0.15
+			}
+		}
+
+		# ---------------- Festung Nord: EXPANSION ----------------
+		sc_fno_northern_offensive = {
+			picture = generic_army_war_college
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_attack_factor = 0.1
+				army_speed_factor = 0.05
+				justify_war_goal_time = -0.5
+			}
+		}
+
+		# ---------------- Banat: FANATICISM ----------------
+		sc_bnt_fanatical_order = {
+			picture = generic_morale_bonus
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_attack_factor = 0.15
+				army_morale_factor = 0.2
+				war_support_factor = 0.25
+				stability_factor = -0.2
+				conscription = 0.03
+			}
+		}
+
+		# ---------------- Black Order: CULT ----------------
+		sc_blo_cult_of_the_order = {
+			picture = generic_communist_army
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				political_power_factor = 0.15
+				army_morale_factor = 0.1
+				research_speed_factor = -0.1
+			}
+		}
+
+		# ---------------- Ashen Riders ----------------
+		sc_ash_children_of_the_fire = {
+			picture = generic_morale_bonus
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_morale_factor = 0.15
+				monthly_population = -0.1
+			}
+		}
+
+		# ---------------- United Kingdom: UPRISINGS ----------------
+		sc_eng_red_clydeside = {
+			picture = generic_communist_army
+			allowed = { always = no }
+			modifier = {
+				stability_factor = -0.1
+				industrial_capacity_factory = -0.1
+			}
+		}
+		sc_eng_irish_troubles = {
+			picture = generic_disjointed_gov
+			allowed = { always = no }
+			modifier = {
+				stability_factor = -0.05
+				war_support_factor = -0.05
 			}
 		}
 	}

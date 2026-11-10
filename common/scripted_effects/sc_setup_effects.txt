@@ -1,22 +1,35 @@
-# Builds the 1946 "Shattered Continent" world on game start.
+# Builds the 1946 "Shattered Continent" world on game start (called from on_startup).
 
 sc_setup_shattered_europe = {
-	# 1. Every European state becomes empty wasteland. Vanilla countries left
-	#    with no states (Germany, France, Italy, etc.) cease to exist.
-	#    Countries with land outside Europe (the USSR's Asian states, colonies) survive as rumps.
+	# 1. Every European state not held by a spared nation becomes No Man's Land.
+	#    Germany, France, Italy, the USSR in Europe, etc. cease to exist.
 	every_state = {
-		limit = { is_on_continent = europe }
+		limit = {
+			is_on_continent = europe
+			NOT = { sc_is_spared_state = yes }
+		}
 		WST = { transfer_state = PREV }
 	}
 
-	# 2. Hand states to the new nations. This effect is GENERATED from
-	#    setup/state_assignments.csv by tools/build_setup.py - edit the CSV, not the effect.
+	# 2. Hand out states. GENERATED from setup/state_assignments.csv (tools/build_setup.py).
+	#    This includes Japan's gains on the Pacific coast and the Siberian generals.
 	sc_assign_starting_states = yes
 
-	# 3. Starting armies, spawned at each nation's capital.
+	# 3. Whatever the USSR still holds east of the Urals and no general has claimed
+	#    becomes empty taiga.
+	every_state = {
+		limit = { is_owned_by = SOV }
+		WST = { transfer_state = PREV }
+	}
+
+	# 4. Danger: random everywhere, then the blast zones from setup/danger_zones.csv.
+	sc_init_danger = yes
+	sc_apply_danger_zones = yes
+
+	# 5. Armies (GENERATED from setup/nations.toml).
 	sc_spawn_starting_armies = yes
 
-	# 4. Set up camps for the roaming warlords.
+	# 6. Roaming warlords pitch their first camp.
 	every_country = {
 		limit = { has_country_flag = sc_nomadic }
 		capital_scope = {
@@ -24,48 +37,8 @@ sc_setup_shattered_europe = {
 			ROOT = { set_variable = { sc_camp_forage = PREV.sc_forage } }
 		}
 	}
-}
 
-sc_spawn_starting_armies = {
-	ALP = {
-		if = { limit = { exists = yes }
-			create_unit = { division = "name = \"1. Gebirgs-Kampfgruppe\" division_template = \"Gebirgs-Kampfgruppe\" start_experience_factor = 0.5" owner = ALP }
-			create_unit = { division = "name = \"2. Gebirgs-Kampfgruppe\" division_template = \"Gebirgs-Kampfgruppe\" start_experience_factor = 0.5" owner = ALP }
-			create_unit = { division = "name = \"3. Gebirgs-Kampfgruppe\" division_template = \"Gebirgs-Kampfgruppe\" start_experience_factor = 0.5" owner = ALP }
-		}
-	}
-	FNO = {
-		if = { limit = { exists = yes }
-			create_unit = { division = "name = \"Festungs-Division Bergen\" division_template = \"Festungs-Division\" start_experience_factor = 0.3" owner = FNO }
-			create_unit = { division = "name = \"Festungs-Division Trondheim\" division_template = \"Festungs-Division\" start_experience_factor = 0.3" owner = FNO }
-			create_unit = { division = "name = \"Festungs-Division Narvik\" division_template = \"Festungs-Division\" start_experience_factor = 0.3" owner = FNO }
-			create_unit = { division = "name = \"Festungs-Division Oslo\" division_template = \"Festungs-Division\" start_experience_factor = 0.3" owner = FNO }
-		}
-	}
-	HNS = {
-		if = { limit = { exists = yes }
-			create_unit = { division = "name = \"Buergerwehr Hamburg\" division_template = \"Buergerwehr\" start_experience_factor = 0.1" owner = HNS }
-			create_unit = { division = "name = \"Buergerwehr Bremen\" division_template = \"Buergerwehr\" start_experience_factor = 0.1" owner = HNS }
-		}
-	}
-	LYO = {
-		if = { limit = { exists = yes }
-			create_unit = { division = "name = \"1re Brigade des Maquis\" division_template = \"Brigade des Maquis\" start_experience_factor = 0.3" owner = LYO }
-			create_unit = { division = "name = \"2e Brigade des Maquis\" division_template = \"Brigade des Maquis\" start_experience_factor = 0.3" owner = LYO }
-		}
-	}
-	HST = {
-		if = { limit = { exists = yes }
-			create_unit = { division = "name = \"1st Sotnia\" division_template = \"Sotnia\" start_experience_factor = 0.6" owner = HST }
-			create_unit = { division = "name = \"2nd Sotnia\" division_template = \"Sotnia\" start_experience_factor = 0.6" owner = HST }
-			create_unit = { division = "name = \"3rd Sotnia\" division_template = \"Sotnia\" start_experience_factor = 0.6" owner = HST }
-		}
-	}
-	LGN = {
-		if = { limit = { exists = yes }
-			create_unit = { division = "name = \"First Cohort\" division_template = \"Legion Cohort\" start_experience_factor = 0.5" owner = LGN }
-			create_unit = { division = "name = \"Second Cohort\" division_template = \"Legion Cohort\" start_experience_factor = 0.5" owner = LGN }
-			create_unit = { division = "name = \"Third Cohort\" division_template = \"Legion Cohort\" start_experience_factor = 0.5" owner = LGN }
-		}
-	}
+	# 7. Nation-specific starting situations.
+	if = { limit = { country_exists = BLO } BLO = { sc_blo_setup = yes } }
+	if = { limit = { country_exists = ENG } ENG = { sc_eng_setup_uprisings = yes } }
 }
