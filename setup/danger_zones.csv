@@ -1,17 +1,33 @@
-state_id,danger,irradiated,note
-# Every other wasteland state gets a random danger of 10-60 at game start.,,,
-# irradiated = yes: no forage, danger 70-100, Radiation Sickness for anyone who camps there.,,,
-# ---------------- Blast site: Berlin ----------------,,,
-,100,yes,Berlin / Brandenburg - ground zero
-,85,yes,Neighbouring state downwind (east of Berlin)
-,75,yes,Neighbouring state (north - Mecklenburg?)
-,70,no,Outer fallout ring - Saxony-Anhalt
-# ---------------- Blast site: Munich ----------------,,,
-,100,yes,Upper Bavaria (Munich) - ground zero
-,80,yes,Swabia (Augsburg)
-,70,no,Lower Bavaria
-# ---------------- The chain reaction (workshop: what exactly was it?) ----------------,,,
-,75,no,Paris ruins
-,75,no,Rhineland (Cologne)
-,70,no,Silesia - burned industrial zone
-,70,no,Moscow ruins
+match,danger,irradiated,note,state_id
+# Every other wasteland state gets a random danger of 10-60. irradiated = yes: no forage and Radiation Sickness.,,,,
+# ================= BLAST SITE: BERLIN =================,,,,
+Brandenburg|Berlin,100,yes,Ground zero,
+Mecklenburg,80,yes,Fallout carried north,
+Sachsen-Anhalt|Anhalt|Magdeburg|Altmark|Provinz Sachsen,80,yes,Fallout carried west,
+# ================= BLAST SITE: MUNICH =================,,,,
+Oberbayern|Upper Bavaria|München|Munchen|Munich,100,yes,Ground zero,
+Schwaben|Swabia|Augsburg,80,yes,Fallout carried west,
+Niederbayern|Lower Bavaria|Oberpfalz,75,no,Outer fallout ring,
+# ================= DEAD CITIES (ruins and scavengers) =================,,,,
+Île-de-France|Ile-de-France|Paris,85,no,Paris burned in the chain reaction,
+Rheinland|Rhineland|Köln|Koln|Cologne,75,no,The Rhine cities are rubble,
+Wien|Vienna,75,no,Vienna ruins,
+Budapest|Pest,70,no,Budapest ruins,
+Beograd|Belgrade|Serbia,65,no,Belgrade ruins - bordering the Banat SS,
+Moskva|Moscow,85,no,Moscow ruins,
+Leningrad|Saint Petersburg,85,no,Leningrad - starved and burned,
+Stalingrad|Volgograd|Tsaritsyn,80,no,Stalingrad ruins,
+Kiev|Kyiv,70,no,Kiev ruins,
+# ================= RAIDER COUNTRY =================,,,,
+Normandie|Normandy|Basse-Normandie|Calvados,80,no,The old D-Day front: minefields and wrecks,
+Pinsk|Pripyat,80,no,The Pripyat marshes - bandit country,
+Holland|Noord-Holland|Zuid-Holland|Amsterdam,70,no,The Drowned Lands - dikes blown and never repaired,
+Schlesien|Silesia|Niederschlesien|Breslau,75,no,Burned industrial belt,
+Sicilia|Sicily,70,no,The island is run by the mafia clans,
+Ostpreussen|East Prussia|Königsberg|Konigsberg,70,no,Ruined fortress lands behind the old front,
+# ================= QUIET LANDS (empty but safe - room to settle) =================,,,,
+Bourgogne|Burgundy,15,no,Empty vineyards and farms,
+Aquitaine|Gironde|Bordeaux,15,no,Far from the blasts,
+Jylland|Jutland|Denmark,20,no,Emptied by refugees fleeing to Sweden,
+Poltava,20,no,Empty Ukrainian black-earth country,
+Alföld|Alfold|Great Hungarian Plain|Tiszántúl|Tiszantul,20,no,Abandoned farmland,

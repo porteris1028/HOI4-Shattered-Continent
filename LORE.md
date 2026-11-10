@@ -79,6 +79,17 @@ The Soviet generals east of the Urals have carved out their own domains. The res
 
 ---
 
+## Geography of the wastes
+| Zone | Where | What it's like |
+|---|---|---|
+| **Fallout zones** (irradiated) | Brandenburg, Mecklenburg and Saxony-Anhalt around **Berlin**. Upper Bavaria and Swabia around **Munich** | Nothing grows. Radiation sickness. Only the Ashen Riders go in willingly |
+| **Dead cities** | Paris, the Rhineland, Vienna, Budapest, Belgrade, Moscow, Leningrad, Stalingrad, Kiev | Rubble fields full of scavengers |
+| **Raider country** | The **old Normandy front** (minefields and wrecks), the **Pripyat marshes**, the **Drowned Lands** of Holland, burned **Silesia**, **East Prussia**, **Sicily** (mafia clans) | Ambushes, bandit lords and booby traps |
+| **Quiet lands** | Burgundy, Aquitaine, Jutland, Poltava, the Great Hungarian Plain | Empty but safe farmland. The first places anyone can settle |
+| **Empty taiga** | Siberia beyond the generals' domains | Vast and lawless |
+
+---
+
 ## Open questions
 1. What exactly was the chain reaction? (Above.)
 2. US–Japan relationship in 1946.

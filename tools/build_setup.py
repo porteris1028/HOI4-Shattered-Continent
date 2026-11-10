@@ -5,9 +5,8 @@ setup/state_assignments.csv  -> who owns what in 1946 (sc_assign_starting_states
 setup/danger_zones.csv       -> blast sites / fallout / raider country (sc_apply_danger_zones)
 
 
-The CSV is the workshop document for the starting map: who owns what in 1946.
-Columns: tag, state_id, capital (yes/no), cores (yes/no), note
-Rows with an empty state_id are skipped (still being decided).
+Usually you don't run this directly: tools/setup_map.py fills in the state IDs and then runs it.
+Rows with an empty state_id are skipped. Rows starting with # are comments.
 
     python3 tools/build_setup.py
 """
@@ -26,8 +25,8 @@ def main():
     by_tag, seen, problems, skipped = OrderedDict(), {}, [], 0
     with SRC.open(newline="", encoding="utf-8-sig") as f:
         for n, row in enumerate(csv.DictReader(f), start=2):
-            tag, sid = row["tag"].strip().upper(), row["state_id"].strip()
-            if not tag or row["tag"].startswith("#"):
+            tag, sid = (row["tag"] or "").strip().upper(), (row.get("state_id") or "").strip()
+            if not tag or tag.startswith("#"):
                 continue
             if not sid:
                 skipped += 1
@@ -39,7 +38,7 @@ def main():
             if sid in seen:
                 problems.append(f"line {n}: state {sid} already given to {seen[sid]}")
             seen[sid] = tag
-            by_tag.setdefault(tag, []).append((sid, yes(row.get("capital")), yes(row.get("cores")), row.get("note", "")))
+            by_tag.setdefault(tag, []).append((sid, yes(row.get("capital")), yes(row.get("cores")), (row.get("note") or "").strip()))
 
     for tag, states in by_tag.items():
         caps = [s for s, c, *_ in states if c]
@@ -75,8 +74,8 @@ def danger_zones():
     if DANGER.exists():
         with DANGER.open(newline="", encoding="utf-8-sig") as f:
             for n, row in enumerate(csv.DictReader(f), start=2):
-                sid = row["state_id"].strip()
-                if sid.startswith("#"):
+                sid = (row.get("state_id") or "").strip()
+                if (next(iter(row.values())) or "").startswith("#"):
                     continue
                 if not sid:
                     skipped += 1
@@ -84,7 +83,7 @@ def danger_zones():
                 danger = row.get("danger", "").strip() or "50"
                 if not (sid.isdigit() and danger.isdigit() and 0 <= int(danger) <= 100):
                     problems.append(f"danger_zones.csv line {n}: bad state_id or danger"); continue
-                note = row.get("note", "").strip()
+                note = (row.get("note") or "").strip()
                 body = f"set_variable = {{ sc_danger = {danger} }}"
                 if yes(row.get("irradiated")):
                     body += " set_state_flag = sc_irradiated"

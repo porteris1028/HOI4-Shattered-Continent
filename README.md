@@ -1,4 +1,4 @@
-# Shattered Continent (HoI4 mod) — v0.2.0
+# Shattered Continent (HoI4 mod) — v0.3.0
 
 **Spring 1946.** D-Day stalled, the Soviets stalled in Poland, and America used its atomic bombs on Berlin and Munich instead of Japan. A chain reaction of collapse followed. Now the USA, Japan and a rising China rule the world, while Europe is a wasteland of warlords, free cities, Cossack hosts and SS fortresses.
 
@@ -35,24 +35,35 @@ Most content is **generated** from three files in `setup/`. Edit those, run the 
 | To change… | Edit | Then run |
 |---|---|---|
 | A nation (name, leader, ideology, army, flag, description…) or add a new one | `setup/nations.toml` | `python3 tools/build_nations.py` |
-| Who owns which states in 1946 | `setup/state_assignments.csv` | `python3 tools/build_setup.py` |
-| Blast sites, fallout and extra-dangerous areas | `setup/danger_zones.csv` | `python3 tools/build_setup.py` |
+| Who owns which states in 1946 | `setup/state_assignments.csv` | `SETUP_MAP.bat` or `tools/setup_map.py` |
+| Blast sites, ruins, raider country, quiet lands | `setup/danger_zones.csv` | `SETUP_MAP.bat` or `tools/setup_map.py` |
 | Which vanilla countries survive | `common/scripted_triggers/sc_setup_triggers.txt` | — |
 
 The tools need **Python 3.11+** and **Pillow** (`pip install pillow`).
 
-### First-time setup (needs your game folder)
-```
-# 1. Make sure none of our 27 tags clash with the game's own tags
-python3 tools/check_tags.py "C:/Program Files (x86)/Steam/steamapps/common/Hearts of Iron IV"
+### Putting the nations on the map (do this once)
+The map plan in `setup/state_assignments.csv` and `setup/danger_zones.csv` lists every state **by name**. A tool matches those names to the game's real state numbers.
 
-# 2. Look up state IDs and fill them into the two CSVs
-python3 tools/list_states.py "C:/Program Files (x86)/Steam/steamapps/common/Hearts of Iron IV" --search tyrol
+**Windows:** double-click **`SETUP_MAP.bat`** in the mod folder. It finds your Steam install of HoI4, or asks you for the path.
 
-# 3. Generate the setup script
-python3 tools/build_setup.py
+**Any system:**
 ```
-> ⚠️ **The bookmark isn't playable until the state IDs are filled in.** Until then, the new nations own no land and don't exist. The CSVs already list every planned region, so you only need to add the numbers.
+python3 tools/setup_map.py "C:/Program Files (x86)/Steam/steamapps/common/Hearts of Iron IV"
+```
+Then open **`setup/match_report.txt`**:
+- `ok`: matched exactly.
+- `CHECK`: a best guess. Make sure it's the right state.
+- `MISSING`: no state with that name was found. Fix the name in the `match` column, or type the number into `state_id` yourself (use `tools/list_states.py` to look it up), then run the tool again. Numbers you type in by hand are kept.
+
+This only needs Python 3 (from https://www.python.org, tick "Add python.exe to PATH"). It never changes your game files.
+
+Also worth running once: `python3 tools/check_tags.py "<HoI4 folder>"` checks that none of our tags clash with the game's own.
+
+### Is the setup working? Check `game.log`
+Start the **1946 "Shattered Continent"** bookmark (the 1936 and 1939 starts are left alone on purpose), then open `Documents/Paradox Interactive/Hearts of Iron IV/logs/game.log` and search for `[Shattered Continent]`:
+- `World setup finished`: everything ran.
+- `PROBLEM: ...`: tells you which step failed.
+- `Not the 1946 bookmark`: you started a different date.
 
 To use real flag art, put an 82×52 TGA at `gfx/flags/custom/<TAG>.tga` and re-run `build_nations.py`.
 
@@ -62,9 +73,8 @@ To use real flag art, put an 82×52 TGA at `gfx/flags/custom/<TAG>.tga` and re-r
 
 When the 1946 bookmark loads (once, from `on_startup`):
 
-1. Every European state **not owned by a spared nation** (ENG, IRE, SWI, SWE, SPR, POR, TUR) goes to **No Man's Land** (`WST`). Germany, France, Italy, the European USSR and the rest disappear.
-2. States are handed out from `state_assignments.csv`. This includes **Japan's gains on the Pacific coast** and the **Siberian generals**.
-3. Anything the USSR still holds east of the Urals becomes empty taiga (No Man's Land), and the USSR is gone.
+1. Every European state **not owned by a spared nation** (ENG, IRE, SWI, SWE, SPR, POR, TUR) goes to **No Man's Land** (`WST`). A second pass also strips every destroyed European power (GER, FRA, ITA, POL…) of its home states, and the whole USSR is dissolved. Colonies of the destroyed powers are left as they are for now.
+2. States are handed out from `state_assignments.csv`. This includes **Japan's gains on the Pacific coast** and the **Siberian generals**. Siberia that nobody claims stays as empty taiga.
 4. Every wasteland state gets a random **danger** (10–60), then the blast zones are applied.
 5. Armies spawn, warbands pitch camp, the **Black Order** gets its devotion, and **Britain's uprisings** begin.
 
@@ -153,7 +163,8 @@ These were written without the game available. Check `error.log` for:
 ---
 
 ## 7. Roadmap
-- **v0.3**: fill in the state IDs, run the first in-game test, fix `error.log`.
+- **v0.3**: map plan by state name + `setup_map` tool, robust wipe, `game.log` diagnostics. Next: first full in-game test and `error.log` fixes.
+- **Colonies** of the destroyed powers (French Africa, Italian Libya…): independence, collapse, or American takeover?
 - **Focus trees**: start with the four SS states, Volkov's Host and the Home Army Republic.
 - **USA / Japan / China**: 1946 situation (wars, alliances), and US relief or intervention in Europe.
 - **Warband v2**: tribute from weak neighbours, seasons, camp followers, smarter AI marching.
@@ -166,13 +177,14 @@ These were written without the game available. Check `error.log` for:
 ## Folder map
 ```
 shattered_continent/
-├── README.md  LORE.md  descriptor.mod
+├── README.md  LORE.md  descriptor.mod  SETUP_MAP.bat
 ├── setup/                       ← EDIT THESE
 │   ├── nations.toml             all nations
 │   ├── state_assignments.csv    1946 borders
 │   └── danger_zones.csv         blast sites / fallout
 ├── tools/
 │   ├── build_nations.py         nations.toml → countries, history, leaders, names, flags, armies
+│   ├── setup_map.py             match state names → IDs, then build (ONE COMMAND)
 │   ├── build_setup.py           CSVs → setup script
 │   ├── check_tags.py            tag clash check against the game
 │   ├── list_states.py           look up vanilla state IDs

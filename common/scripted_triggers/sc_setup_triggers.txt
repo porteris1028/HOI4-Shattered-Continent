@@ -11,3 +11,14 @@ sc_is_spared_state = {
 		is_owned_by = TUR	# Turkey keeps Thrace
 	}
 }
+
+# Country scope. European nations destroyed by the chain reaction.
+# Their homelands are wiped at game start even if the continent check misses them.
+sc_is_destroyed_european_country = {
+	OR = {
+		tag = GER tag = FRA tag = ITA tag = POL tag = CZE tag = SLO tag = AUS
+		tag = HUN tag = ROM tag = YUG tag = BUL tag = GRE tag = ALB tag = BEL
+		tag = HOL tag = LUX tag = DEN tag = NOR tag = FIN tag = EST tag = LAT
+		tag = LIT tag = ICE tag = VIC
+	}
+}

@@ -1,8 +1,9 @@
 # Builds the 1946 "Shattered Continent" world on game start (called from on_startup).
 
 sc_setup_shattered_europe = {
+	log = "[Shattered Continent] World setup starting"
+
 	# 1. Every European state not held by a spared nation becomes No Man's Land.
-	#    Germany, France, Italy, the USSR in Europe, etc. cease to exist.
 	every_state = {
 		limit = {
 			is_on_continent = europe
@@ -10,26 +11,43 @@ sc_setup_shattered_europe = {
 		}
 		WST = { transfer_state = PREV }
 	}
+	# 1b. Second pass that doesn't depend on continents: the destroyed European powers
+	#     lose every state they have a core on (their homeland). Colonies are kept for now.
+	every_country = {
+		limit = { sc_is_destroyed_european_country = yes }
+		every_owned_state = {
+			limit = { is_core_of = PREV }
+			WST = { transfer_state = PREV }
+		}
+	}
+	# The USSR is gone entirely (Siberia is handed to the generals in step 2).
+	if = {
+		limit = { country_exists = SOV }
+		SOV = { every_owned_state = { WST = { transfer_state = PREV } } }
+	}
+	log = "[Shattered Continent] Europe wiped"
+	# Diagnostics for game.log
+	if = { limit = { country_exists = WST } log = "[Shattered Continent] OK: No Man's Land exists" }
+	else = { log = "[Shattered Continent] PROBLEM: No Man's Land (WST) does not exist - state transfers failed" }
+	if = { limit = { country_exists = GER } log = "[Shattered Continent] PROBLEM: Germany still exists" }
+	if = { limit = { country_exists = FRA } log = "[Shattered Continent] Note: France still exists (probably colonies only)" }
 
 	# 2. Hand out states. GENERATED from setup/state_assignments.csv (tools/build_setup.py).
 	#    This includes Japan's gains on the Pacific coast and the Siberian generals.
 	sc_assign_starting_states = yes
 
-	# 3. Whatever the USSR still holds east of the Urals and no general has claimed
-	#    becomes empty taiga.
-	every_state = {
-		limit = { is_owned_by = SOV }
-		WST = { transfer_state = PREV }
-	}
+	log = "[Shattered Continent] Starting states assigned"
+	if = { limit = { NOT = { country_exists = ALP } } log = "[Shattered Continent] PROBLEM: Alpenfestung got no land - run tools/setup_map.py" }
+	if = { limit = { NOT = { country_exists = HST } } log = "[Shattered Continent] PROBLEM: Volkov's Host got no land - run tools/setup_map.py" }
 
-	# 4. Danger: random everywhere, then the blast zones from setup/danger_zones.csv.
+	# 3. Danger: random everywhere, then the blast zones from setup/danger_zones.csv.
 	sc_init_danger = yes
 	sc_apply_danger_zones = yes
 
-	# 5. Armies (GENERATED from setup/nations.toml).
+	# 4. Armies (GENERATED from setup/nations.toml).
 	sc_spawn_starting_armies = yes
 
-	# 6. Roaming warlords pitch their first camp.
+	# 5. Roaming warlords pitch their first camp.
 	every_country = {
 		limit = { has_country_flag = sc_nomadic }
 		capital_scope = {
@@ -38,7 +56,9 @@ sc_setup_shattered_europe = {
 		}
 	}
 
-	# 7. Nation-specific starting situations.
+	# 6. Nation-specific starting situations.
 	if = { limit = { country_exists = BLO } BLO = { sc_blo_setup = yes } }
 	if = { limit = { country_exists = ENG } ENG = { sc_eng_setup_uprisings = yes } }
+
+	log = "[Shattered Continent] World setup finished"
 }

@@ -1,69 +1,85 @@
-tag,state_id,capital,cores,note
-# Fill in state_id using: python3 tools/list_states.py "<HoI4 folder>" --search <name>,,,,
-# Then run: python3 tools/build_setup.py,,,,
-# Spared vanilla nations (ENG IRE SWI SWE SPR POR TUR) keep their land automatically - only add rows to GIVE them more.,,,,
-# ---------------- SS holdouts ----------------,,,,
-ALP,,yes,yes,Tyrol (Innsbruck) - redoubt heartland
-ALP,,no,yes,Salzburg / Berchtesgaden
-ALP,,no,no,Vorarlberg
-FNO,,yes,yes,Oslo region
-FNO,,no,yes,Bergen / Western Norway
-FNO,,no,no,Trondheim
-FNO,,no,no,Northern Norway (Narvik)
-BNT,,yes,yes,Banat (Timisoara)
-BNT,,no,no,Vojvodina (Novi Sad)
-BLO,,yes,yes,Brabant (Brussels)
-BLO,,no,no,Flanders (Antwerp / Ghent)
-BLO,,no,no,Wallonia (Liege)
-# ---------------- Wehrmacht / Red Army remnants ----------------,,,,
-WCH,,yes,yes,Western Pomerania (Stettin)
-WCH,,no,yes,Eastern Pomerania
-WCH,,no,no,Danzig
-KRL,,yes,yes,Courland (Libau)
-BLF,,yes,yes,Brest-Litovsk / Western Belarus
-BLF,,no,no,Minsk
-BLF,,no,no,Bialystok
-VRA,,yes,yes,Kazan
-VRA,,no,yes,Kuibyshev (Samara)
-VRA,,no,no,Saratov
-# ---------------- Cossacks ----------------,,,,
-DNH,,yes,yes,Rostov
-DNH,,no,yes,Upper Don / Voronezh
-URH,,yes,yes,Orenburg (Chkalov)
-URH,,no,no,West Kazakhstan (Uralsk)
-# ---------------- Roaming warlords and raiders (one camp state each) ----------------,,,,
-HST,,yes,no,Camp in Volhynia / western Ukraine
-LGN,,yes,no,Camp in the Ardennes / Champagne
-ASH,,yes,no,Camp at the edge of the Berlin fallout zone (Brandenburg border)
-PVR,,yes,no,Camp in the Po valley (Emilia)
-CRW,,yes,no,Camp in the Carpathians (Transcarpathia)
-# ---------------- Communes and free states ----------------,,,,
-HNS,,yes,yes,Hamburg
-HNS,,no,yes,Bremen
-HNS,,no,no,Schleswig-Holstein (Luebeck)
-LYO,,yes,yes,Rhone (Lyon)
-LYO,,no,no,Isere / Savoy
-RWC,,yes,yes,Westphalia / Ruhr (Essen)
-OSL,,yes,yes,Piedmont north (Ossola valleys)
-BZH,,yes,yes,Brittany
-AKR,,yes,yes,Central Poland (Warsaw ruins / Lodz)
-AKR,,no,yes,Krakow
-AKR,,no,no,Kielce / Lublin
-BPF,,yes,yes,Bosnia (Sarajevo)
-BPF,,no,yes,Montenegro
-BPF,,no,no,Macedonia
-HLY,,yes,yes,Lazio (Rome)
-HLY,,no,no,Umbria / Tuscany
-# ---------------- Siberia and the Pacific ----------------,,,,
-WSB,,yes,yes,Omsk
-WSB,,no,no,Tyumen
-WSB,,no,no,Tomsk
-CSB,,yes,yes,Krasnoyarsk
-CSB,,no,no,Novosibirsk
-TBF,,yes,yes,Irkutsk
-TBF,,no,no,Chita
-TBF,,no,no,Buryatia (Ulan-Ude)
-JAP,,no,yes,Primorye (Vladivostok)
-JAP,,no,no,Khabarovsk
-JAP,,no,no,Northern Sakhalin
-JAP,,no,no,Kamchatka / Okhotsk coast
+tag,match,capital,cores,note,state_id
+# HOW THIS WORKS: 'match' lists possible in-game state names separated by |. Run tools/setup_map.py and it fills in state_id for you.,,,,,
+# Anything not listed here becomes No Man's Land. Spared nations (ENG IRE SWI SWE SPR POR TUR) keep their own land automatically.,,,,,
+# ================= SS HOLDOUTS =================,,,,,
+ALP,Tirol|Tyrol|Nordtirol,yes,yes,Innsbruck - redoubt heartland,
+ALP,Salzburg,no,yes,Berchtesgaden and the Salzach valley,
+ALP,Vorarlberg,no,no,Arlberg pass,
+ALP,Kärnten|Karnten|Carinthia,no,no,Southern passes,
+FNO,Østlandet|Ostlandet|Oslo|Eastern Norway,yes,yes,Oslo,
+FNO,Sørlandet|Sorlandet|Southern Norway|Kristiansand,no,yes,Skagerrak coast,
+FNO,Vestlandet|Bergen|Western Norway,no,yes,Bergen,
+FNO,Trøndelag|Trondelag|Trondheim,no,no,Trondheim,
+FNO,Nordland|Nord-Norge|Northern Norway|Narvik,no,no,Narvik,
+FNO,Troms|Finnmark|Troms og Finnmark,no,no,Arctic coast,
+BNT,Banat|Timis|Timisoara,yes,yes,Temeswar,
+BNT,Vojvodina|Backa|Bačka|Novi Sad,no,no,Novi Sad,
+BLO,Brabant|Brussels|Bruxelles|Brussel,yes,yes,The Ordensburg in Brussels,
+BLO,Flanders|Vlaanderen|Antwerpen|Antwerp|Flandre,no,no,Antwerp and Ghent,
+BLO,Wallonia|Wallonie|Liège|Liege|Hainaut,no,no,Liege,
+# ================= WEHRMACHT / RED ARMY REMNANTS =================,,,,,
+WCH,Pommern|Pomerania|Vorpommern|Stettin,yes,yes,Stettin,
+WCH,Hinterpommern|Eastern Pomerania|Köslin|Koslin|Pomorze,no,yes,Kolberg,
+WCH,Danzig|Gdańsk|Gdansk,no,no,Danzig,
+KRL,Kurzeme|Courland|Kurland,yes,yes,Libau,
+BLF,Brest|Brest-Litovsk|Polesie|Polesia,yes,yes,Brest-Litovsk,
+BLF,Minsk,no,yes,Minsk,
+BLF,Białystok|Bialystok,no,no,Bialystok,
+BLF,Grodno|Hrodna,no,no,Grodno,
+VRA,Kazan|Tatarstan|Tataria,yes,yes,Kazan,
+VRA,Kuibyshev|Kuybyshev|Samara,no,yes,Kuibyshev,
+VRA,Saratov,no,no,Saratov,
+VRA,Ulyanovsk|Simbirsk,no,no,Ulyanovsk,
+# ================= COSSACKS =================,,,,,
+DNH,Rostov|Rostov-on-Don,yes,yes,Novocherkassk,
+DNH,Voronezh,no,yes,Upper Don,
+DNH,Krasnodar|Kuban,no,no,Kuban,
+URH,Orenburg|Chkalov,yes,yes,Orenburg,
+URH,Uralsk|West Kazakhstan|Aktobe|Aktyubinsk,no,no,Ural river steppe,
+# ================= ROAMING WARLORDS AND RAIDERS (one camp each) =================,,,,,
+HST,Volhynia|Wołyń|Wolyn|Rovno|Lutsk,yes,no,Camp in Volhynia,
+LGN,Champagne|Ardennes|Reims,yes,no,Camp in the Champagne,
+ASH,Sachsen|Saxony|Dresden,yes,no,Camp on the edge of the Berlin fallout,
+PVR,Emilia|Emilia-Romagna|Bologna,yes,no,Camp in the Po rice fields,
+CRW,Ruthenia|Carpathian Ruthenia|Transcarpathia|Subcarpathia|Podkarpatska Rus,yes,no,Camp in the Carpathians,
+# ================= COMMUNES AND FREE STATES =================,,,,,
+HNS,Hamburg,yes,yes,Hamburg,
+HNS,Bremen|Weser-Ems|Oldenburg,no,yes,Bremen,
+HNS,Schleswig-Holstein|Holstein|Lübeck|Lubeck,no,no,Luebeck,
+LYO,Rhône|Rhone|Lyon|Lyonnais|Rhône-Alpes,yes,yes,Lyon,
+LYO,Savoie|Savoy|Isère|Isere|Dauphiné|Dauphine,no,no,Grenoble,
+RWC,Westfalen|Westphalia|Ruhr,yes,yes,Essen and Dortmund,
+OSL,Piemonte|Piedmont|Piemont,yes,yes,Ossola valleys,
+OSL,Valle d'Aosta|Aosta,no,no,Aosta,
+BZH,Bretagne|Brittany,yes,yes,Rennes and Brest,
+BZH,Pays de la Loire|Loire|Nantes,no,no,Nantes,
+AKR,Warszawa|Warsaw|Mazowsze|Masovia,yes,yes,Warsaw ruins,
+AKR,Kraków|Krakow|Cracow|Małopolska|Malopolska,no,yes,Krakow,
+AKR,Kielce,no,no,Kielce,
+AKR,Lublin,no,no,Lublin,
+AKR,Łódź|Lodz,no,yes,Lodz,
+BPF,Bosnia|Sarajevo,yes,yes,Sarajevo,
+BPF,Montenegro|Zeta|Crna Gora|Cetinje,no,yes,Montenegro,
+BPF,Herzegovina|Mostar,no,no,Herzegovina,
+BPF,Macedonia|Vardar|Skopje,no,no,Macedonia,
+HLY,Lazio|Latium|Rome|Roma,yes,yes,Rome and the Vatican,
+HLY,Umbria,no,yes,Umbria,
+HLY,Toscana|Tuscany,no,no,Tuscany,
+HLY,Marche|Abruzzo,no,no,Adriatic coast,
+# ================= SIBERIA AND THE PACIFIC =================,,,,,
+WSB,Omsk,yes,yes,Omsk,
+WSB,Tyumen,no,yes,Tyumen,
+WSB,Tomsk,no,no,Tomsk,
+WSB,Kurgan,no,no,Kurgan,
+CSB,Krasnoyarsk,yes,yes,Krasnoyarsk,
+CSB,Novosibirsk,no,yes,Novosibirsk,
+CSB,Kemerovo|Kuzbass,no,no,Kuznetsk coal basin,
+TBF,Irkutsk,yes,yes,Irkutsk,
+TBF,Chita,no,yes,Chita,
+TBF,Buryatia|Buryat|Ulan-Ude,no,no,Ulan-Ude,
+TBF,Amur|Blagoveshchensk,no,no,Front line on the Amur,
+JAP,Primorsky|Primorye|Primorsky Krai|Vladivostok,no,yes,Vladivostok,
+JAP,Khabarovsk,no,no,Khabarovsk,
+JAP,Sakhalin|North Sakhalin|Northern Sakhalin,no,no,Northern Sakhalin,
+JAP,Kamchatka,no,no,Kamchatka,
+JAP,Magadan|Okhotsk|Kolyma,no,no,Okhotsk coast,

@@ -10,6 +10,11 @@ on_actions = {
 				set_global_flag = sc_world_setup_done
 				sc_setup_shattered_europe = yes
 			}
+			else_if = {
+				limit = { NOT = { date > 1946.1.1 } NOT = { has_global_flag = sc_wrong_bookmark_logged } }
+				set_global_flag = sc_wrong_bookmark_logged
+				log = "[Shattered Continent] Not the 1946 bookmark - world setup skipped"
+			}
 		}
 	}
 
